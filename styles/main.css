@@ -1,0 +1,21 @@
+body {
+	background-image: url("../assets/milky_way.jpg");
+	background-blend-mode: normal;
+	background-color: rgb(0 0 0);
+	background-size: cover;
+	user-select: none;
+	-moz-user-select: none;
+	box-sizing: border-box;
+	background-position: top;
+	background-repeat: no-repeat;
+	overflow: visible;
+}
+
+hgroup,
+main {
+	max-width: 768px;
+}
+
+h2 {
+	font-size: 1.5rem;
+}

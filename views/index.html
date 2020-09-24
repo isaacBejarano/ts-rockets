@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rockets</title>
+		<!-- Bootstrap CSS. v.4.4^ <-> .container-{breakpoint}  -->
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+			crossorigin="anonymous"
+		/>
+		<!-- Font Awesome - icons -->
+		<link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="../styles/main.css" />
+	</head>
+
+	<body>
+		<header class="container-fluid p-0 mt-lg-5">
+			<hgroup class="row mx-auto text-light">
+				<h1 class="col-9 display-4 pt-4 pl-4">Rockets</h1>
+				<div class="col-3 d-flex justify-content-end p-0">
+					<button
+						id="btn-show-all-rockets"
+						class="align-self-start btn btn-sm btn-outline-light mt-2 mr-2 mt-sm-4 mr-sm-4"
+						type="button"
+					>
+						<i class="fas fa-list-ul mr-1"></i>
+						List
+					</button>
+				</div>
+				<h2 class="col-12 pb-4 pl-4 font-weight-lighter">OOP - Typescript</h2>
+			</hgroup>
+		</header>
+
+		<main class="mx-auto border border-light border-top-0">
+			<!-- LIST OF ALL ROCKETS -->
+			<div id="list-all-rockets"></div>
+		</main>
+
+		<script src="../models/A.js"></script>
+		<script src="../controllers/B.js"></script>
+	</body>
+</html>
