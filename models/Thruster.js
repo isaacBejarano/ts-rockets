@@ -1,2 +1,7 @@
 "use strict";
-console.log("Thruster runing...");
+var Thruster = /** @class */ (function () {
+    function Thruster(thruster) {
+        this.thruster = thruster !== "" ? thruster : "not specified";
+    }
+    return Thruster;
+}());
