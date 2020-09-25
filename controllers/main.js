@@ -15,26 +15,34 @@ var starShip = new Rocket("ldsfja32");
 falconHeavy.setThrusters = [merlin10, merlin30, kestrel80];
 starShip.setThrusters = [raptor30, raptor40, raptor50, raptor50b, methalox30, methalox10];
 // 3. outlet
-// <span>
-var outletSpan = document.getElementById("counter-rockets");
-outletSpan.textContent = "Total Rockets: " + Rocket.CountToString(); // stringified
-// <ol>
 var outletList = document.getElementById("list-all-rockets");
-// append
-Rocket.ListToString().forEach(function (rocket) {
-    var listItem = document.createElement("li");
-    var listP = document.createElement("p");
-    listItem.classList.add("text-light", "mx-5", "px-3");
-    outletList.append(listItem);
-    listItem.append(listP);
-    listP.textContent = rocket.toString();
-    // console.log(rocket.toString());
-});
-// REFS + Listener
-var btn = document.getElementById("btn-show-all-rockets");
-btn === null || btn === void 0 ? void 0 : btn.addEventListener("click", function () {
+var outletSpan = document.getElementById("counter-rockets");
+outletSpan.textContent = "Rockets: " + Rocket.CountToString(); // stringified
+// 4. list of Rockets --init
+renderList();
+// 5. List of Rockets --update
+var btn = document.getElementById("btn-show-all-rockets"); // ref
+var initialListlength = outletList.children.length;
+// listener
+btn.addEventListener("click", function () {
+    if (outletList.children.length > initialListlength)
+        renderList(); // update
+    // show list
     outletSpan.classList.toggle("is-hidden");
     outletList.classList.toggle("is-hidden");
 });
-// TEST
-console.log(Rocket.ListToString());
+/* LIB */
+function renderList() {
+    var templateLiItem = document.querySelector(".template-li-item");
+    Rocket.rocketList.forEach(function (rocket, i) {
+        // 1. clone HTML template
+        var cloned = templateLiItem.cloneNode(true);
+        // 2. append cloned + make it visible
+        outletList.append(cloned);
+        cloned.classList.remove("d-none");
+        // 3. inject data
+        outletList.children[i].children[0].children[1].textContent = rocket.getId;
+        outletList.children[i].children[1].children[1].textContent = rocket.thrustersToString();
+        outletList.children[i].children[2].children[1].textContent = rocket.totalMaxThrust();
+    });
+}

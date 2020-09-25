@@ -21,16 +21,58 @@ body {
 
 h2,
 h3 {
-	font-size: 1.5rem;
-	text-shadow: 0 0 5px black;
+	text-shadow: 0 0 2px black;
+}
+
+h2 {
+	font-size: 1.3rem;
+}
+
+h3 span {
+	font-size: 1rem;
 }
 
 ol {
-	text-shadow: 0 0 5px black;
 	background-image: radial-gradient(transparent, #0000008f);
-	/* height: 100vh; */
+}
+ol li:hover {
+	cursor: pointer;
+	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e, transparent);
+	mix-blend-mode: screen;
+	text-shadow: 0 0 2px black;
 }
 
+p i.fas:hover {
+	background-color: black !important;
+}
+
+/* custom class */
+.btn-outline-plum {
+	color: gainsboro;
+	border-color: gainsboro;
+}
+.btn:focus {
+	box-shadow: none;
+}
+.btn-outline-plum:hover {
+	color: inherit;
+	border-left-color: #ffb300e0;
+	border-top-color: #ce15d1dc;
+	border-right-color: #0f87d5f5;
+	border-bottom-color: #5eff00b0;
+}
+.btn-outline-plum:active {
+	border-color: inherit;
+	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e);
+}
+.text-cyan {
+	color: cyan;
+}
+.text-gold {
+	color: aquamarine;
+}
+
+/* dynamic class */
 .is-hidden {
 	visibility: hidden;
 }

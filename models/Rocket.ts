@@ -1,11 +1,11 @@
 class Rocket {
 	private id: string;
 	private thrusters: Thruster[] = [];
-	private static count: number = 0;
 	private static list: Rocket[] = [];
+	private static count: number = 0;
 
 	constructor(id?: string) {
-		this.id = !id || id.length < 8 ? "not specified" : id.toUpperCase();
+		this.id = !id || id.length !== 8 ? "not specified" : id.toUpperCase();
 		Rocket.count++; //count instances
 		Rocket.list.push(this); //list instances
 	}
@@ -15,6 +15,16 @@ class Rocket {
 		this.thrusters = thrusters;
 	}
 
+	// getters
+	get getId(): string {
+		return this.id;
+	}
+
+	static get rocketList(): Rocket[] {
+		return this.list;
+	}
+
+	// methods
 	totalMaxThrust(): string {
 		let listOfPower: string = "";
 
@@ -28,20 +38,17 @@ class Rocket {
 		return listOfPower;
 	}
 
+	totalThrusters(): number {
+		return this.thrusters.length;
+	}
+
 	// toString
-	toString(): string {
-		return `\
-		Rocket "${this.id}"
-		Thrusters: ${this.thrusters.length}
-		Max.Power per Thruster: ${this.totalMaxThrust()}`;
+	thrustersToString(): string {
+		return this.totalThrusters().toString();
 	}
 
 	// static toString
-	static CountToString() {
-		return this.count;
-	}
-
-	static ListToString() {
-		return this.list;
+	static CountToString(): string {
+		return this.count.toString();
 	}
 }

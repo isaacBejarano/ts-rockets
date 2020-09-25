@@ -17,34 +17,41 @@ falconHeavy.setThrusters = [merlin10, merlin30, kestrel80];
 starShip.setThrusters = [raptor30, raptor40, raptor50, raptor50b, methalox30, methalox10];
 
 // 3. outlet
-
-// <span>
-let outletSpan = document.getElementById("counter-rockets") as HTMLSpanElement;
-outletSpan.textContent = "Total Rockets: " + Rocket.CountToString(); // stringified
-
-// <ol>
 let outletList = document.getElementById("list-all-rockets") as HTMLOListElement;
+let outletSpan = document.getElementById("counter-rockets") as HTMLSpanElement;
+outletSpan.textContent = "Rockets: " + Rocket.CountToString(); // stringified
 
-// append
-Rocket.ListToString().forEach(rocket => {
-	let listItem = document.createElement("li") as HTMLLIElement;
-	let listP = document.createElement("p") as HTMLParagraphElement;
+// 4. list of Rockets --init
+renderList();
 
-	listItem.classList.add("text-light", "mx-5", "px-3");
+// 5. List of Rockets --update
+let btn = document.getElementById("btn-show-all-rockets") as HTMLButtonElement; // ref
+let initialListlength = outletList.children.length;
 
-	outletList.append(listItem);
-	listItem.append(listP);
-	listP.textContent = rocket.toString() as string;
+// listener
+btn.addEventListener("click", function () {
+	if (outletList.children.length > initialListlength) renderList(); // update
 
-	// console.log(rocket.toString());
-});
-
-// REFS + Listener
-let btn = document.getElementById("btn-show-all-rockets");
-btn?.addEventListener("click", function () {
+	// show list
 	outletSpan.classList.toggle("is-hidden");
 	outletList.classList.toggle("is-hidden");
 });
 
-// TEST
-console.log(Rocket.ListToString());
+/* LIB */
+function renderList() {
+	const templateLiItem = document.querySelector(".template-li-item") as HTMLLIElement;
+
+	Rocket.rocketList.forEach((rocket, i) => {
+		// 1. clone HTML template
+		let cloned = templateLiItem.cloneNode(true) as HTMLLIElement;
+
+		// 2. append cloned + make it visible
+		outletList.append(cloned);
+		cloned.classList.remove("d-none");
+
+		// 3. inject data
+		outletList.children[i].children[0].children[1].textContent = rocket.getId;
+		outletList.children[i].children[1].children[1].textContent = rocket.thrustersToString();
+		outletList.children[i].children[2].children[1].textContent = rocket.totalMaxThrust();
+	});
+}

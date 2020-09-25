@@ -2,7 +2,7 @@
 var Rocket = /** @class */ (function () {
     function Rocket(id) {
         this.thrusters = [];
-        this.id = !id || id.length < 8 ? "not specified" : id.toUpperCase();
+        this.id = !id || id.length !== 8 ? "not specified" : id.toUpperCase();
         Rocket.count++; //count instances
         Rocket.list.push(this); //list instances
     }
@@ -14,6 +14,22 @@ var Rocket = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Rocket.prototype, "getId", {
+        // getters
+        get: function () {
+            return this.id;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket, "rocketList", {
+        get: function () {
+            return this.list;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    // methods
     Rocket.prototype.totalMaxThrust = function () {
         var listOfPower = "";
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
@@ -24,18 +40,18 @@ var Rocket = /** @class */ (function () {
         listOfPower = listOfPower.substr(0, listOfPower.length - 2);
         return listOfPower;
     };
+    Rocket.prototype.totalThrusters = function () {
+        return this.thrusters.length;
+    };
     // toString
-    Rocket.prototype.toString = function () {
-        return "\t\tRocket \"" + this.id + "\"\n\t\tThrusters: " + this.thrusters.length + "\n\t\tMax.Power per Thruster: " + this.totalMaxThrust();
+    Rocket.prototype.thrustersToString = function () {
+        return this.totalThrusters().toString();
     };
     // static toString
     Rocket.CountToString = function () {
-        return this.count;
+        return this.count.toString();
     };
-    Rocket.ListToString = function () {
-        return this.list;
-    };
-    Rocket.count = 0;
     Rocket.list = [];
+    Rocket.count = 0;
     return Rocket;
 }());

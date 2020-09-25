@@ -25,11 +25,11 @@
 		<div id="wrapper" class="mx-auto">
 			<header class="container-fluid p-0">
 				<hgroup class="row mx-auto text-light">
-					<h1 class="col-9 display-4 pt-4 pl-4">Rockets</h1>
+					<h1 class="col-9 display-4 pt-3 pl-4 m-0">Rockets</h1>
 					<div class="col-3 d-flex justify-content-end p-0">
 						<button
 							id="btn-show-all-rockets"
-							class="align-self-start btn btn-sm btn-outline-light mt-2 mr-2 mt-sm-4 mr-sm-4"
+							class="align-self-start btn btn-sm btn-outline-plum mt-2 mr-2 mt-sm-4 mr-sm-4"
 							type="button"
 						>
 							<i class="fas fa-list-ul mr-1"></i>
@@ -41,34 +41,32 @@
 			</header>
 
 			<!-- LIST OF ALL ROCKETS -->
-			<main class="mx-auto mt-5">
+			<main class="mx-auto mt-5 pt-md-5">
 				<h3 class="text-light font-weight-normal text-center">
 					<!-- outlet <span> -->
 					<span id="counter-rockets"></span>
 				</h3>
 
-				<!-- <p class="my-1">
-							<i class="far fa-address-card"></i>
-							PLATE:
-							<span class="text-dark"></span>
-						</p>
-						<p class="my-1">
-							<i class="fas fa-signature"></i>
-							BRAND:
-							<span class="text-dark"></span>
-						</p>
-						<p class="my-1">
-							<i class="fas fa-palette"></i>
-							COLOR:
-							<span class="text-dark"></span>
-						</p>
-						<div class="border border-bottom my-2"></div> -->
-
 				<!-- outlet <ol> -->
-				<ol
-					id="list-all-rockets"
-					class="my-3 my-sm-4 my-md-5 py-5 vh-100 border border-dark border-bottom-0 rounded-top"
-				></ol>
+				<ol id="list-all-rockets" class="my-3 py-3 vh-100 border border-dark border-bottom-0 rounded-top">
+					<li class="d-none template-li-item text-light p-3 my-3 mr-4 border border-dark rounded-lg">
+						<p class="my-1">
+							<i class="fas fa-rocket"></i>
+							Rocket:
+							<span class="text-cyan"></span>
+						</p>
+						<p class="my-1">
+							<i class="fas fa-burn"></i>
+							Thrusters:
+							<span class="text-gold"></span>
+						</p>
+						<p class="my-1">
+							<i class="fas fa-bolt"></i>
+							Max.Power:
+							<span class="text-gold"></span>
+						</p>
+					</li>
+				</ol>
 			</main>
 		</div>
 
