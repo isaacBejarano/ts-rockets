@@ -15,8 +15,26 @@ var starShip = new Rocket("ldsfja32");
 falconHeavy.setThrusters = [merlin10, merlin30, kestrel80];
 starShip.setThrusters = [raptor30, raptor40, raptor50, raptor50b, methalox30, methalox10];
 // 3. outlet
+// <span>
+var outletSpan = document.getElementById("counter-rockets");
+outletSpan.textContent = "Total Rockets: " + Rocket.CountToString(); // stringified
+// <ol>
+var outletList = document.getElementById("list-all-rockets");
+// append
 Rocket.ListToString().forEach(function (rocket) {
-    console.log(rocket.toString());
+    var listItem = document.createElement("li");
+    var listP = document.createElement("p");
+    listItem.classList.add("text-light", "mx-5", "px-3");
+    outletList.append(listItem);
+    listItem.append(listP);
+    listP.textContent = rocket.toString();
+    // console.log(rocket.toString());
+});
+// REFS + Listener
+var btn = document.getElementById("btn-show-all-rockets");
+btn === null || btn === void 0 ? void 0 : btn.addEventListener("click", function () {
+    outletSpan.classList.toggle("is-hidden");
+    outletList.classList.toggle("is-hidden");
 });
 // TEST
 console.log(Rocket.ListToString());
