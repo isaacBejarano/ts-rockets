@@ -1,20 +1,22 @@
-/* INIT */
+// 1. set thrusters and rockets
+const merlin10 = new Thruster("Merlin", 10);
+const merlin30 = new Thruster("Merlin", 30);
+const kestrel80 = new Thruster("Kestrel", 80);
+const raptor30 = new Thruster("Raptor", 30);
+const raptor40 = new Thruster("Raptor", 40);
+const raptor50 = new Thruster("Raptor", 50);
+const raptor50b = new Thruster("Raptor", 50);
+const methalox30 = new Thruster("Methalox", 30);
+const methalox10 = new Thruster("Methalox", 10);
 
-// thrusters
-const merlin = new Thruster("Merlin");
-const kestrel = new Thruster("Kestrel");
-const raptor = new Thruster("Raptor");
-const methalox = new Thruster("Methalox");
-
-// rockets
 let falconHeavy = new Rocket("32wessds");
 let starShip = new Rocket("ldsfja32");
 
-// add trhusters to rockets
-falconHeavy.setThrusters = [merlin, merlin, kestrel];
-starShip.setThrusters = [raptor, raptor, raptor, raptor, methalox, methalox];
+// 2. add thrusters to rockets
+falconHeavy.setThrusters = [merlin10, merlin30, kestrel80];
+starShip.setThrusters = [raptor30, raptor40, raptor50, raptor50b, methalox30, methalox10];
 
-/* toString */
+// 3. outlet
 Rocket.ListToString().forEach(rocket => {
 	console.log(rocket.toString());
 });

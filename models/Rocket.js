@@ -14,9 +14,19 @@ var Rocket = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Rocket.prototype.totalMaxThrust = function () {
+        var listOfPower = "";
+        for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
+            var thruster = _a[_i];
+            listOfPower += thruster.getMaxThrust + ", ";
+        }
+        // get rid of last ", "
+        listOfPower = listOfPower.substr(0, listOfPower.length - 2);
+        return listOfPower;
+    };
     // toString
     Rocket.prototype.toString = function () {
-        return "Rocket " + this.id + " has " + this.thrusters.length + " thrusters.";
+        return "\t\tRocket \"" + this.id + "\"\n\t\tThrusters: " + this.thrusters.length + "\n\t\tMax.Power per Thruster: " + this.totalMaxThrust();
     };
     // static toString
     Rocket.CountToString = function () {

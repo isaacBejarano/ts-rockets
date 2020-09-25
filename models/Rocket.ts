@@ -15,9 +15,25 @@ class Rocket {
 		this.thrusters = thrusters;
 	}
 
+	totalMaxThrust(): string {
+		let listOfPower: string = "";
+
+		for (let thruster of this.thrusters) {
+			listOfPower += thruster.getMaxThrust + ", ";
+		}
+
+		// get rid of last ", "
+		listOfPower = listOfPower.substr(0, listOfPower.length - 2);
+
+		return listOfPower;
+	}
+
 	// toString
 	toString(): string {
-		return `Rocket ${this.id} has ${this.thrusters.length} thrusters.`;
+		return `\
+		Rocket "${this.id}"
+		Thrusters: ${this.thrusters.length}
+		Max.Power per Thruster: ${this.totalMaxThrust()}`;
 	}
 
 	// static toString
