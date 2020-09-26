@@ -18,7 +18,7 @@
 			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="../styles/main.css" />
+		<link rel="stylesheet" href="../styles/style.css" />
 	</head>
 
 	<body>
@@ -42,29 +42,55 @@
 
 			<!-- LIST OF ALL ROCKETS -->
 			<main class="mx-auto mt-5 pt-md-5">
-				<h3 class="text-light font-weight-normal text-center">
+				<h3 class="text-light font-weight-bolder text-center">
 					<!-- outlet <span> -->
-					<span id="counter-rockets"></span>
+					<span id="counter-rockets" class="is-hidden"></span>
 				</h3>
 
 				<!-- outlet <ol> -->
-				<ol id="list-all-rockets" class="my-3 py-3 vh-100 border border-dark border-bottom-0 rounded-top">
-					<li class="d-none template-li-item text-light p-3 my-3 mr-4 border border-dark rounded-lg">
-						<p class="my-1">
-							<i class="fas fa-rocket"></i>
-							Rocket:
-							<span class="text-cyan"></span>
-						</p>
-						<p class="my-1">
-							<i class="fas fa-burn"></i>
-							Thrusters:
-							<span class="text-gold"></span>
-						</p>
-						<p class="my-1">
-							<i class="fas fa-bolt"></i>
-							Max.Power:
-							<span class="text-gold"></span>
-						</p>
+				<ol id="list-all-rockets" class="my-3 py-3 vh-100 border border-dark border-bottom-0 rounded-top is-hidden">
+					<li
+						class="d-flex justify-content-between d-none template-li-item font-weight-lighter text-light p-3 my-3 mr-4 border border-dark rounded-lg"
+					>
+						<div class="model">
+							<p class="my-1">
+								<i class="fas fa-rocket"></i>
+								Rocket:
+								<span class="text-cyan"></span>
+							</p>
+							<p class="my-1">
+								<i class="fab fa-superpowers"></i>
+								Thrusters:
+								<span class="text-aquamarine"></span>
+							</p>
+							<p class="my-1">
+								<i class="fas fa-bolt"></i>
+								Max. Power / Thruster:
+								<span class="text-aquamarine"></span>
+							</p>
+							<p class="my-1">
+								<i class="fas fa-burn"></i>
+								Current Power / Thruster:
+								<span class="text-warning">outlet</span>
+							</p>
+							<p class="my-1">
+								<i class="fas fa-fire"></i>
+								Current Power :
+								<span class="text-warning">outlet</span>
+							</p>
+						</div>
+
+						<div class="methods align-self-center d-flex flex-column ml-2">
+							<h4 class="text-center font-weight-lighter">speed</h4>
+
+							<button id="increase-power" class="btn btn-sm btn-outline-light mb-2" type="button">
+								<i class="fas fa-plus"></i>
+							</button>
+
+							<button id="increase-power" class="btn btn-sm btn-outline-light mt-1" type="button">
+								<i class="fas fa-minus"></i>
+							</button>
+						</div>
 					</li>
 				</ol>
 			</main>
@@ -72,7 +98,6 @@
 
 		<script src="../models/Thruster.js"></script>
 		<script src="../models/Rocket.js"></script>
-		<script src="../models/Fleet.js"></script>
 		<script src="../controllers/main.js"></script>
 	</body>
 </html>

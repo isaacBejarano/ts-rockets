@@ -1,17 +1,20 @@
 class Thruster {
+	static minThrust: number = 0; // default
+
 	constructor(
-		// prettier-ignore
-		private name: string,
-		private maxThrust: number = 0 // min
+		private readonly model: string = "", // default
+		private readonly maxThrust: number = Thruster.minThrust
 	) {
-		this.name = name !== "" ? name : "not specified";
+		this.model = !model || model.trim() === "" ? "not specified" : model.trim();
+		this.maxThrust = maxThrust < Thruster.minThrust ? Thruster.minThrust : maxThrust;
 	}
 
 	// getter
+	// get getModel() {
+	// 	return this.model;
+	// }
+
 	get getMaxThrust() {
 		return this.maxThrust;
-	}
-	get getName() {
-		return this.name;
 	}
 }

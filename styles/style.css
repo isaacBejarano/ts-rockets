@@ -28,7 +28,7 @@ h2 {
 	font-size: 1.3rem;
 }
 
-h3 span {
+h3 span, h4 {
 	font-size: 1rem;
 }
 
@@ -68,7 +68,7 @@ p i.fas:hover {
 .text-cyan {
 	color: cyan;
 }
-.text-gold {
+.text-aquamarine {
 	color: aquamarine;
 }
 
