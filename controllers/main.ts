@@ -9,8 +9,12 @@ let falconHeavy = new Rocket("32wessds");
 let starShip = new Rocket("ldsfja32");
 
 // 2. Add thrusters to rockets
+// prettier-ignore
+starShip.setThrusters = [
+	merlin30, raptor40, raptor50,
+	raptor50, merlin30, merlin10
+];
 falconHeavy.setThrusters = [merlin10, merlin30, methalox80];
-starShip.setThrusters = [merlin30, raptor40, raptor50, raptor50, merlin30, merlin10];
 
 // 3. Outlet
 let outletList = document.getElementById("list-all-rockets") as HTMLOListElement;
@@ -75,21 +79,42 @@ function renderList() {
 		cloned.classList.remove("d-none");
 
 		// 3. inject data + validation CSS
-		// Rocket
-		outletList.children[i].children[0].children[0].children[1].textContent = rocket.getId;
+		// -> Rocket
+		// prettier-ignore
+		outletList
+		.children[i].children[0].children[0]
+		.children[1].textContent = rocket.getId;
 
-		if (rocket.getId === "not specified" || rocket.getId === "wrong code format")
-			outletList.children[i].children[0].children[0].children[1].classList.add("text-danger");
-
-		// Thrusters
-		outletList.children[i].children[0].children[1].children[1].textContent = rocket.totalThrustersToString();
-		if (+rocket.totalThrustersToString() < Rocket.getminThrusters) {
-			outletList.children[i].children[0].children[1].children[1].classList.add("text-danger");
-			outletList.children[i].children[0].children[2].children[1].classList.add("text-danger");
+		if (rocket.getId === "not specified" || rocket.getId === "wrong code format") {
+			// prettier-ignore
+			outletList
+			.children[i].children[0].children[0]
+			.children[1].classList.add("text-danger");
 		}
 
-		// Max. Power
-		outletList.children[i].children[0].children[2].children[1].textContent = rocket.totalMaxThrust();
+		// -> Thrusters
+		// prettier-ignore
+		outletList
+		.children[i].children[0].children[1]
+		.children[1].textContent = rocket.totalThrustersToString();
+
+		if (+rocket.totalThrustersToString() < Rocket.getminThrusters) {
+			// prettier-ignore
+			outletList
+			.children[i].children[0].children[1]
+			.children[1].classList.add("text-danger");
+
+			// prettier-ignore
+			outletList
+			.children[i].children[0].children[2]
+			.children[1].classList.add("text-danger");
+		}
+
+		// -> Max. Power
+		// prettier-ignore
+		outletList
+		.children[i].children[0].children[2]
+		.children[1].textContent = rocket.totalMaxThrust();
 	});
 
 	// render number of Rockets in the List

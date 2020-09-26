@@ -6,8 +6,16 @@ var Thruster = /** @class */ (function () {
         if (maxThrust === void 0) { maxThrust = Thruster.minThrust; }
         this.model = model;
         this.maxThrust = maxThrust;
-        this.model = !model || model.trim() === "" ? "not specified" : model.trim();
-        this.maxThrust = maxThrust < Thruster.minThrust ? Thruster.minThrust : maxThrust;
+        // prettier-ignore
+        this.model =
+            !model || model.trim() === ""
+                ? "not specified"
+                : model.trim();
+        // prettier-ignore
+        this.maxThrust =
+            maxThrust < Thruster.minThrust
+                ? Thruster.minThrust
+                : maxThrust;
     }
     Object.defineProperty(Thruster.prototype, "getMaxThrust", {
         // getter
