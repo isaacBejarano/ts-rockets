@@ -7,9 +7,9 @@ class Thruster {
 	) {
 		// prettier-ignore
 		this.model = 
-		!model || model.trim() === ""
-		? "not specified"
-		: model.trim();
+			!model || model.trim() === ""
+				? "not specified"
+				: model.trim();
 
 		// prettier-ignore
 		this.maxThrust = 
