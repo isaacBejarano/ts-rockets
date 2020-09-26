@@ -71,33 +71,33 @@ function renderList() {
         // prettier-ignore
         outletList
             .children[i].children[0].children[0]
-            .children[1].textContent = rocket.getId;
+            .children[0].children[1].textContent = rocket.getId;
         if (rocket.getId === "not specified" || rocket.getId === "wrong code format") {
             // prettier-ignore
             outletList
                 .children[i].children[0].children[0]
-                .children[1].classList.add("text-danger");
+                .children[0].children[1].classList.add("text-danger");
         }
         // -> Thrusters
         // prettier-ignore
         outletList
-            .children[i].children[0].children[1]
-            .children[1].textContent = rocket.totalThrustersToString();
+            .children[i].children[0].children[0]
+            .children[1].children[1].textContent = rocket.totalThrustersToString();
         if (+rocket.totalThrustersToString() < Rocket.getminThrusters) {
             // prettier-ignore
             outletList
-                .children[i].children[0].children[1]
-                .children[1].classList.add("text-danger");
+                .children[i].children[0].children[0]
+                .children[1].children[1].classList.add("text-danger");
             // prettier-ignore
             outletList
-                .children[i].children[0].children[2]
-                .children[1].classList.add("text-danger");
+                .children[i].children[0].children[0]
+                .children[2].children[1].classList.add("text-danger");
         }
         // -> Max. Power
         // prettier-ignore
         outletList
-            .children[i].children[0].children[2]
-            .children[1].textContent = rocket.totalMaxThrust();
+            .children[i].children[0].children[0]
+            .children[2].children[1].textContent = rocket.totalMaxThrust();
     });
     // render number of Rockets in the List
     outletSpan.textContent = "Rockets: " + Rocket.countToString(); // stringified

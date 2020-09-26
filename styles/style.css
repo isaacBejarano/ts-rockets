@@ -32,10 +32,10 @@ h3 span, h4 {
 	font-size: 1rem;
 }
 
-ol {
+ul {
 	background-image: radial-gradient(transparent, #0000008f);
 }
-ol li:hover {
+ul li:hover {
 	cursor: pointer;
 	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e, transparent);
 	mix-blend-mode: screen;
