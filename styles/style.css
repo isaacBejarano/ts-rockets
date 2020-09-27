@@ -21,21 +21,26 @@ body {
 
 h2,
 h3 {
-	text-shadow: 0 0 2px black;
+	text-shadow: 0 0 3px black;
 }
 
 h2 {
 	font-size: 1.3rem;
 }
 
-h3 span, h4 {
+h3 p {
+	font-size: 1.2rem;
+}
+h4 {
 	font-size: 1rem;
 }
 
-ul {
+ol {
 	background-image: radial-gradient(transparent, #0000008f);
+	list-style-type: decimal;
+	color: green;
 }
-ul li:hover {
+ol li:hover {
 	cursor: pointer;
 	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e, transparent);
 	mix-blend-mode: screen;
@@ -70,6 +75,12 @@ p i.fas:hover {
 }
 .text-aquamarine {
 	color: aquamarine;
+}
+.text-gold {
+	color: gold;
+}
+.text-violet {
+	color: violet;
 }
 
 /* dynamic class */

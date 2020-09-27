@@ -1,5 +1,6 @@
 class Thruster {
 	static minThrust: number = 0; // default
+	private currentPower: number = 0; // default
 
 	constructor(
 		private readonly model: string = "", // default
@@ -18,12 +19,17 @@ class Thruster {
 				: maxThrust;
 	}
 
-	// getter
-	// get getModel() {
-	// 	return this.model;
-	// }
+	// setters
+	set setCurrentPower(x: number) {
+		this.currentPower = x;
+	}
 
-	get getMaxThrust() {
+	// getters
+	get getCurrentPower(): number {
+		return this.currentPower;
+	}
+
+	get getMaxThrust(): number {
 		return this.maxThrust;
 	}
 }

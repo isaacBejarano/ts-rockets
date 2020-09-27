@@ -6,6 +6,7 @@ var Thruster = /** @class */ (function () {
         if (maxThrust === void 0) { maxThrust = Thruster.minThrust; }
         this.model = model;
         this.maxThrust = maxThrust;
+        this.currentPower = 0; // default
         // prettier-ignore
         this.model =
             !model || model.trim() === ""
@@ -17,11 +18,23 @@ var Thruster = /** @class */ (function () {
                 ? Thruster.minThrust
                 : maxThrust;
     }
+    Object.defineProperty(Thruster.prototype, "setCurrentPower", {
+        // setters
+        set: function (x) {
+            this.currentPower = x;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Thruster.prototype, "getCurrentPower", {
+        // getters
+        get: function () {
+            return this.currentPower;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Thruster.prototype, "getMaxThrust", {
-        // getter
-        // get getModel() {
-        // 	return this.model;
-        // }
         get: function () {
             return this.maxThrust;
         },

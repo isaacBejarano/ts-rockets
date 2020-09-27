@@ -9,14 +9,12 @@ var falconHeavy = new Rocket("32wessds");
 var starShip = new Rocket("ldsfja32");
 // 2. Add thrusters to rockets
 // prettier-ignore
-starShip.setThrusters = [
-    merlin30, raptor40, raptor50,
-    raptor50, merlin30, merlin10
-];
 falconHeavy.setThrusters = [merlin10, merlin30, methalox80];
+starShip.setThrusters = [merlin30, raptor40, raptor50, raptor50, merlin30, merlin10];
 // 3. Outlet
 var outletList = document.getElementById("list-all-rockets");
-var outletSpan = document.getElementById("counter-rockets");
+var outletP = document.getElementById("counter-rockets");
+var outletSpan = document.querySelector("#counter-rockets .outlet");
 // TEST *********************
 // for (let i = 0; i < 10000; i++) {
 // 	let someRocket = new Rocket("someRock"); // stack overflow
@@ -46,59 +44,107 @@ var outletSpan = document.getElementById("counter-rockets");
 // 4. List of Rockets --init
 renderList();
 // 5. List of Rockets --update
-var btn = document.getElementById("btn-show-all-rockets"); // ref
+var btnList = document.getElementById("btn-show-all-rockets"); // ref
 var initialListlength = outletList.children.length;
 /* LISTENER */
-btn.addEventListener("click", function () {
+btnList.addEventListener("click", function () {
     if (outletList.children.length > initialListlength)
         renderList(); // update
     // show list
-    outletSpan.classList.toggle("is-hidden");
+    outletP.classList.toggle("is-hidden");
     outletList.classList.toggle("is-hidden");
 });
 /* LIB */
 function renderList() {
     var templateLiItem = document.querySelector(".template-li-item");
-    // render List of Rockets
+    // 1. render List of Rockets
     Rocket.getRocketList.forEach(function (rocket, i) {
-        // 1. clone HTML template
+        // 1.1 clone HTML template + append <li>
         var cloned = templateLiItem.cloneNode(true);
-        // 2. append cloned + make it visible
         outletList.append(cloned);
+        // 1.2 id + render
+        cloned.id = "rocket-" + (i + 1);
         cloned.classList.remove("d-none");
-        // 3. inject data + validation CSS
-        // -> Rocket
+        // 1.3 inject data + validation CSS
+        // <- Rocket
         // prettier-ignore
         outletList
-            .children[i].children[0].children[0]
+            .children[i + 1].children[0].children[0]
             .children[0].children[1].textContent = rocket.getId;
+        // Rocket CSS
         if (rocket.getId === "not specified" || rocket.getId === "wrong code format") {
             // prettier-ignore
             outletList
-                .children[i].children[0].children[0]
-                .children[0].children[1].classList.add("text-danger");
+                .children[i + 1].children[0].children[0]
+                .children[0].children[1].classList.add("text-violet");
         }
-        // -> Thrusters
+        // <- Thrusters
         // prettier-ignore
         outletList
-            .children[i].children[0].children[0]
+            .children[i + 1].children[0].children[0]
             .children[1].children[1].textContent = rocket.totalThrustersToString();
-        if (+rocket.totalThrustersToString() < Rocket.getminThrusters) {
-            // prettier-ignore
-            outletList
-                .children[i].children[0].children[0]
-                .children[1].children[1].classList.add("text-danger");
-            // prettier-ignore
-            outletList
-                .children[i].children[0].children[0]
-                .children[2].children[1].classList.add("text-danger");
-        }
-        // -> Max. Power
+        // <- Max. Power
         // prettier-ignore
         outletList
-            .children[i].children[0].children[0]
+            .children[i + 1].children[0].children[0]
             .children[2].children[1].textContent = rocket.totalMaxThrust();
+        // Thrusters + Max. Power CSS
+        if (+rocket.totalThrustersToString() < Rocket.getMinThrusters) {
+            // prettier-ignore
+            outletList
+                .children[i + 1].children[0].children[0]
+                .children[1].children[1].classList.add("text-violet"); // Thrusters
+            // prettier-ignore
+            outletList
+                .children[i + 1].children[0].children[0]
+                .children[2].children[1].classList.add("text-violet"); // Max. Power
+        }
+        //  REPEATED CODE REFACTOR
+        // <- Current Thrust
+        // prettier-ignore
+        outletList
+            .children[i + 1].children[0].children[0]
+            .children[3].children[1].textContent = rocket.currentThrust();
+        // <- Current Power
+        // prettier-ignore
+        outletList
+            .children[i + 1].children[0].children[0]
+            .children[4].children[1].textContent = rocket.currentPower().toString();
     });
-    // render number of Rockets in the List
-    outletSpan.textContent = "Rockets: " + Rocket.countToString(); // stringified
+    // 2. render number of Rockets
+    outletSpan.textContent = Rocket.countToString(); // stringified
 }
+// TEST
+// 1.4 liteners -> speed
+var speedUpButtons = document.querySelectorAll(".speed-up-power");
+var _loop_1 = function (i) {
+    console.log(speedUpButtons[i]);
+    speedUpButtons[i].addEventListener("click", function () {
+        Rocket.getRocketList[i - 1].speedUp(); // <- FALLA . DEBBUGG IT
+        console.log(Rocket.getRocketList[i - 1]);
+    });
+};
+// HTML => exclude first btn / is visibility hidden -> i starts at 1
+for (var i = 1; i < speedUpButtons.length; i++) {
+    _loop_1(i);
+}
+// let btnSpeedDown = document.querySelector(`#${cloned.id} .speed-down-power`) as HTMLButtonElement;
+// btnSpeedUp.addEventListener("click", function () {
+// 	rocket.speedUp(); // <-- FALLA
+// 	console.log(rocket);
+// 	console.log(rocket.currentThrust());
+// 	console.log(rocket.currentPower());
+// 	// <- Current Thrust
+// 	// prettier-ignore
+// 	outletList
+// 		.children[i+1].children[0].children[0]
+// 		.children[3].children[1].textContent = rocket.currentThrust();
+// 	// <- Current Power
+// 	// prettier-ignore
+// 	outletList
+// 		.children[i+1].children[0].children[0]
+// 		.children[4].children[1].textContent = rocket.currentPower().toString();
+// });
+// btnSpeedDown.addEventListener("click", function () {
+// 	console.log(rocket);
+// });

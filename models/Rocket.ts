@@ -2,7 +2,8 @@ class Rocket {
 	private readonly id: string;
 	private thrusters: Thruster[] = [];
 	private static list: Rocket[] = [];
-	private static readonly minThrusters: number = 2;
+	static readonly minThrusters: number = 2;
+	static readonly powerIncrement: number = 10;
 	private static count: number = 0;
 
 	constructor(id?: string) {
@@ -41,19 +42,53 @@ class Rocket {
 	}
 
 	totalMaxThrust(): string {
-		let listOfPower: string = "";
+		let maxPowerList: string = "";
 
 		if (this.totalThrusters() >= Rocket.minThrusters) {
 			for (let thruster of this.thrusters) {
-				listOfPower += thruster.getMaxThrust + ", ";
+				maxPowerList += thruster.getMaxThrust + ", ";
 			}
 			// remove last ", "
-			listOfPower = listOfPower.substr(0, listOfPower.length - 2);
+			maxPowerList = maxPowerList.substr(0, maxPowerList.length - 2);
 		} else if (this.totalThrusters() > 0) {
-			listOfPower = "insuficient thrusters";
-		} else listOfPower = "no thrusters specified";
+			maxPowerList = "insuficient thrusters";
+		} else maxPowerList = "no thrusters specified";
 
-		return listOfPower;
+		return maxPowerList;
+	}
+
+	currentThrust(): string {
+		let currentThrustList: string = "";
+
+		if (this.totalThrusters() >= Rocket.minThrusters) {
+			for (let thruster of this.thrusters) {
+				currentThrustList += thruster.getCurrentPower + ", ";
+			}
+			// remove last ", "
+			currentThrustList = currentThrustList.substr(0, currentThrustList.length - 2);
+		} else if (this.totalThrusters() > 0) {
+			currentThrustList = "insuficient thrusters";
+		} else currentThrustList = "no thrusters specified";
+
+		return currentThrustList;
+	}
+
+	currentPower(): number {
+		let sum: number = 0;
+
+		this.thrusters.forEach(thruster => {
+			sum += thruster.getCurrentPower;
+		});
+
+		return sum;
+	}
+
+	speedUp() {
+		for (let i = 0; i < this.totalThrusters(); i++) {
+			// prettier-ignore
+			this.thrusters[i].setCurrentPower =
+				this.thrusters[i].getCurrentPower + Rocket.powerIncrement;
+		}
 	}
 
 	// toString
@@ -65,7 +100,7 @@ class Rocket {
 		return this.count.toString();
 	}
 
-	static get getminThrusters() {
+	static get getMinThrusters(): number {
 		return this.minThrusters;
 	}
 }
