@@ -1,11 +1,12 @@
 class Rocket {
+	// static props
+	private static list: Rocket[] = [];
+	private static minThrustersLength: number = 2;
+	private static powerIncrement: number = 10;
+	// instance props
 	private id: string;
 	private thrusters: Thruster[] = [];
-	static list: Rocket[] = [];
-	static minThrusters: number = 2;
-	static powerIncrement: number = 10;
-	static count: number = 0;
-
+	
 	constructor(id?: string) {
 		this.id =
 			!id || id.trim().length === 0
@@ -13,9 +14,8 @@ class Rocket {
 				: id.trim().length !== 8
 				? "wrong code format"
 				: id.trim().toUpperCase();
-		// count + list instances
-		Rocket.count++;
-		Rocket.list.push(this);
+
+		Rocket.list.push(this); // save instances in class
 	}
 
 	// setter
@@ -24,33 +24,45 @@ class Rocket {
 	}
 
 	// getters
-	get getId(): string {
-		return this.id;
-	}
-
 	get getThrusters(): Thruster[] {
 		return this.thrusters;
 	}
 
+	get getId(): string {
+		return this.id;
+	}
+
 	static get getRocketList(): Rocket[] {
-		return this.list;
+		return Rocket.list;
+	}
+
+	static get getMinThrustersLength(): number {
+		return Rocket.minThrustersLength;
+	}
+
+	static get getPowerIncrement(): number {
+		return Rocket.powerIncrement;
 	}
 
 	// methods
-	totalThrusters(): number {
+	static getListLength(): number {
+		return Rocket.list.length;
+	}
+
+	thrustersLength(): number {
 		return this.thrusters.length;
 	}
 
 	totalMaxThrust(): string {
 		let maxPowerList: string = "";
 
-		if (this.totalThrusters() >= Rocket.minThrusters) {
+		if (this.thrusters.length >= Rocket.minThrustersLength) {
 			for (let thruster of this.thrusters) {
 				maxPowerList += thruster.getMaxThrust + ", ";
 			}
 			// remove last ", "
 			maxPowerList = maxPowerList.substr(0, maxPowerList.length - 2);
-		} else if (this.totalThrusters() > 0) {
+		} else if (this.thrusters.length > 0) {
 			maxPowerList = "insuficient thrusters";
 		} else maxPowerList = "no thrusters specified";
 
@@ -58,48 +70,34 @@ class Rocket {
 	}
 
 	currentThrust(): string {
-		let currentThrustList: string = "";
+		let thurstersPowerList: string = "";
 
-		if (this.totalThrusters() >= Rocket.minThrusters) {
+		if (this.thrusters.length >= Rocket.minThrustersLength) {
 			for (let thruster of this.thrusters) {
-				currentThrustList += thruster.getCurrentPower + ", ";
+				thurstersPowerList += thruster.getCurrentPower + ", ";
 			}
 			// remove last ", "
-			currentThrustList = currentThrustList.substr(0, currentThrustList.length - 2);
-		} else if (this.totalThrusters() > 0) {
-			currentThrustList = "insuficient thrusters";
-		} else currentThrustList = "no thrusters specified";
+			thurstersPowerList = thurstersPowerList.substr(0, thurstersPowerList.length - 2);
+		} else if (this.thrusters.length > 0) {
+			thurstersPowerList = "insuficient thrusters";
+		} else thurstersPowerList = "no thrusters specified";
 
-		return currentThrustList;
+		return thurstersPowerList;
 	}
 
 	currentPower(): number {
 		let sum: number = 0;
 
-		this.thrusters.forEach(thruster => {
+		for (let thruster of this.thrusters) {
 			sum += thruster.getCurrentPower;
-		});
+		}
 
 		return sum;
 	}
 
 	speedUp() {
-		this.thrusters.forEach(thruster => {
+		for (let thruster of this.thrusters) {
 			thruster.setCurrentPower = 10;
-		});
-		console.log(this.thrusters);
-	}
-
-	// toString
-	totalThrustersToString(): string {
-		return this.totalThrusters().toString();
-	}
-
-	static countToString(): string {
-		return this.count.toString();
-	}
-
-	static get getMinThrusters(): number {
-		return this.minThrusters;
+		}
 	}
 }

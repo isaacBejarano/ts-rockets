@@ -50,72 +50,60 @@ btnList.addEventListener("click", function () {
 });
 /* LIB */
 function renderList() {
+    // 1. Render List of Rockets
     var templateLiItem = document.querySelector(".template-li-item");
-    // 1. render List of Rockets
     Rocket.getRocketList.forEach(function (rocket, i) {
-        // 1.1 clone HTML template + append <li>
+        // 1.1 clone + append <li>
         var cloned = templateLiItem.cloneNode(true);
         outletList.append(cloned);
-        // 1.2 id + render
+        // 1.2 <li> -> id + show
         cloned.id = "rocket-" + (i + 1);
         cloned.classList.remove("d-none");
-        // 1.3 inject data + validation CSS
-        // <- Rocket
-        // prettier-ignore
-        outletList
-            .children[i + 1].children[0].children[0]
-            .children[0].children[1].textContent = rocket.getId;
-        // Rocket CSS
-        if (rocket.getId === "not specified" || rocket.getId === "wrong code format") {
-            // prettier-ignore
-            outletList
-                .children[i + 1].children[0].children[0]
-                .children[0].children[1].classList.add("text-violet");
+        // 1.3 <li> <- inject data
+        injectData(i, 0, rocket.getId); // <- Rocket
+        injectData(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
+        injectData(i, 2, rocket.totalMaxThrust()); // <- Max. Power
+        injectData(i, 3, rocket.currentThrust()); // <- Current Thrust
+        injectData(i, 4, rocket.currentPower().toString()); // <- Current Power
+        // 1.4 liteners -> speed up/down
+        var speedUpButtons = document.querySelectorAll(".speed-up-power");
+        var _loop_1 = function (j) {
+            speedUpButtons[j].addEventListener("click", function () {
+                Rocket.getRocketList[j - 1].speedUp(); // btn1 -> Rocket[0], etc...
+                // injected data update
+                // injectData(i, 3, rocket.currentThrust()); // <- Current Thrust
+                // injectData(i, 4, rocket.currentPower().toString()); // <- Current Power
+                console.log(outletList.children[0].children[0].children[0].children[3].children[1]);
+            });
+        };
+        // HTML => exclude first btn / is visibility hidden -> i starts at 1
+        for (var j = 1; j < speedUpButtons.length; j++) {
+            _loop_1(j);
         }
-        // <- Thrusters
-        // prettier-ignore
-        outletList
-            .children[i + 1].children[0].children[0]
-            .children[1].children[1].textContent = rocket.totalThrustersToString();
-        // <- Max. Power
-        // prettier-ignore
-        outletList
-            .children[i + 1].children[0].children[0]
-            .children[2].children[1].textContent = rocket.totalMaxThrust();
-        // Thrusters + Max. Power CSS
-        if (+rocket.totalThrustersToString() < Rocket.getMinThrusters) {
-            // prettier-ignore
-            outletList
-                .children[i + 1].children[0].children[0]
-                .children[1].children[1].classList.add("text-violet"); // Thrusters
-            // prettier-ignore
-            outletList
-                .children[i + 1].children[0].children[0]
-                .children[2].children[1].classList.add("text-violet"); // Max. Power
+        // 1.5 <li> validate CSS
+        if (rocket.getId === "not specified" || rocket.getId === "wrong code format")
+            invalidCSS(i, 0); // Rocket
+        if (rocket.thrustersLength() < Rocket.getMinThrustersLength) {
+            invalidCSS(i, 1); // Thrusters
+            invalidCSS(i, 2); // Max. Power
         }
-        //  REPEATED CODE REFACTOR
-        // <- Current Thrust
-        // prettier-ignore
-        outletList
-            .children[i + 1].children[0].children[0]
-            .children[3].children[1].textContent = rocket.currentThrust();
-        // <- Current Power
-        // prettier-ignore
-        outletList
-            .children[i + 1].children[0].children[0]
-            .children[4].children[1].textContent = rocket.currentPower().toString();
     });
-    // 2. render number of Rockets
-    outletSpan.textContent = Rocket.countToString(); // stringified
-    // 3. TEST	//  liteners -> speed
-    var speedUpButtons = document.querySelectorAll(".speed-up-power");
-    var _loop_1 = function (i) {
-        speedUpButtons[i].addEventListener("click", function () {
-            Rocket.list[i - 1].speedUp();
-        });
-    };
-    // HTML => exclude first btn / is visibility hidden -> i starts at 1
-    for (var i = 1; i < speedUpButtons.length; i++) {
-        _loop_1(i);
-    }
+    // 2. Render Number of Rockets
+    outletSpan.textContent = Rocket.getListLength().toString(); // stringified
+}
+/* AUX */
+// prettier-ignore
+function injectData(i, HTMLTemplateIndex, action) {
+    // console.log(
+    // 	outletList
+    // 	.children[0].children[0].children[0]
+    // 	.children[HTMLTemplateIndex].children[1].textContent = 'lol'
+    // 	)
+    return (outletList.children[i + 1].children[0].children[0].children[HTMLTemplateIndex].children[1].textContent = action);
+}
+// prettier-ignore
+function invalidCSS(i, HTMLTemplateIndex) {
+    outletList
+        .children[i + 1].children[0].children[0]
+        .children[HTMLTemplateIndex].children[1].classList.add("text-violet");
 }

@@ -1,14 +1,16 @@
 class Thruster {
-	static minThrust: number = 0; // default
+	// static props
+	private static readonly minThrust: number = 0; // default
+	// instance props
 	private currentPower: number = 0; // default
-
+	
 	constructor(
 		private readonly model: string = "", // default
 		private readonly maxThrust: number = Thruster.minThrust
 	) {
 		// prettier-ignore
 		this.model = 
-			!model || model.trim() === ""
+			(!model || model.trim() === "")
 				? "not specified"
 				: model.trim();
 
@@ -25,11 +27,11 @@ class Thruster {
 	}
 
 	// getters
-	get getCurrentPower(): number {
-		return this.currentPower;
-	}
-
 	get getMaxThrust(): number {
 		return this.maxThrust;
+	}
+
+	get getCurrentPower(): number {
+		return this.currentPower;
 	}
 }

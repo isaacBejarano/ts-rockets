@@ -8,9 +8,7 @@ var Rocket = /** @class */ (function () {
                 : id.trim().length !== 8
                     ? "wrong code format"
                     : id.trim().toUpperCase();
-        // count + list instances
-        Rocket.count++;
-        Rocket.list.push(this);
+        Rocket.list.push(this); // save instances in class
     }
     Object.defineProperty(Rocket.prototype, "setThrusters", {
         // setter
@@ -20,35 +18,52 @@ var Rocket = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Rocket.prototype, "getId", {
-        // getters
-        get: function () {
-            return this.id;
-        },
-        enumerable: false,
-        configurable: true
-    });
     Object.defineProperty(Rocket.prototype, "getThrusters", {
+        // getters
         get: function () {
             return this.thrusters;
         },
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Rocket.prototype, "getId", {
+        get: function () {
+            return this.id;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Rocket, "getRocketList", {
         get: function () {
-            return this.list;
+            return Rocket.list;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket, "getMinThrustersLength", {
+        get: function () {
+            return Rocket.minThrustersLength;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket, "getPowerIncrement", {
+        get: function () {
+            return Rocket.powerIncrement;
         },
         enumerable: false,
         configurable: true
     });
     // methods
-    Rocket.prototype.totalThrusters = function () {
+    Rocket.getListLength = function () {
+        return Rocket.list.length;
+    };
+    Rocket.prototype.thrustersLength = function () {
         return this.thrusters.length;
     };
     Rocket.prototype.totalMaxThrust = function () {
         var maxPowerList = "";
-        if (this.totalThrusters() >= Rocket.minThrusters) {
+        if (this.thrusters.length >= Rocket.minThrustersLength) {
             for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
                 var thruster = _a[_i];
                 maxPowerList += thruster.getMaxThrust + ", ";
@@ -56,7 +71,7 @@ var Rocket = /** @class */ (function () {
             // remove last ", "
             maxPowerList = maxPowerList.substr(0, maxPowerList.length - 2);
         }
-        else if (this.totalThrusters() > 0) {
+        else if (this.thrusters.length > 0) {
             maxPowerList = "insuficient thrusters";
         }
         else
@@ -64,52 +79,39 @@ var Rocket = /** @class */ (function () {
         return maxPowerList;
     };
     Rocket.prototype.currentThrust = function () {
-        var currentThrustList = "";
-        if (this.totalThrusters() >= Rocket.minThrusters) {
+        var thurstersPowerList = "";
+        if (this.thrusters.length >= Rocket.minThrustersLength) {
             for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
                 var thruster = _a[_i];
-                currentThrustList += thruster.getCurrentPower + ", ";
+                thurstersPowerList += thruster.getCurrentPower + ", ";
             }
             // remove last ", "
-            currentThrustList = currentThrustList.substr(0, currentThrustList.length - 2);
+            thurstersPowerList = thurstersPowerList.substr(0, thurstersPowerList.length - 2);
         }
-        else if (this.totalThrusters() > 0) {
-            currentThrustList = "insuficient thrusters";
+        else if (this.thrusters.length > 0) {
+            thurstersPowerList = "insuficient thrusters";
         }
         else
-            currentThrustList = "no thrusters specified";
-        return currentThrustList;
+            thurstersPowerList = "no thrusters specified";
+        return thurstersPowerList;
     };
     Rocket.prototype.currentPower = function () {
         var sum = 0;
-        this.thrusters.forEach(function (thruster) {
+        for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
+            var thruster = _a[_i];
             sum += thruster.getCurrentPower;
-        });
+        }
         return sum;
     };
     Rocket.prototype.speedUp = function () {
-        this.thrusters.forEach(function (thruster) {
+        for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
+            var thruster = _a[_i];
             thruster.setCurrentPower = 10;
-        });
-        console.log(this.thrusters);
+        }
     };
-    // toString
-    Rocket.prototype.totalThrustersToString = function () {
-        return this.totalThrusters().toString();
-    };
-    Rocket.countToString = function () {
-        return this.count.toString();
-    };
-    Object.defineProperty(Rocket, "getMinThrusters", {
-        get: function () {
-            return this.minThrusters;
-        },
-        enumerable: false,
-        configurable: true
-    });
+    // static props
     Rocket.list = [];
-    Rocket.minThrusters = 2;
+    Rocket.minThrustersLength = 2;
     Rocket.powerIncrement = 10;
-    Rocket.count = 0;
     return Rocket;
 }());
