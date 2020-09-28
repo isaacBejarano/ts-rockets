@@ -21,7 +21,7 @@ var Thruster = /** @class */ (function () {
     Object.defineProperty(Thruster.prototype, "setCurrentPower", {
         // setters
         set: function (x) {
-            this.currentPower = x;
+            this.currentPower += x;
         },
         enumerable: false,
         configurable: true

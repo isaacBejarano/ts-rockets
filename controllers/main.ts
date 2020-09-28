@@ -1,17 +1,22 @@
-// 1. Thrusters & Rockets instances
-const merlin10 = new Thruster("Merlin-10", 10);
-const merlin30 = new Thruster("Merlin-30", 30);
-const raptor40 = new Thruster("Raptor-40", 40);
-const raptor50 = new Thruster("Raptor-50", 50);
-const methalox80 = new Thruster("Methalox-80", 80);
-
-let falconHeavy = new Rocket("32wessds");
-let starShip = new Rocket("ldsfja32");
+// 1. Rockets instances
+const falconHeavy = new Rocket("32wessds");
+const starShip = new Rocket("ldsfja32");
 
 // 2. Add thrusters to rockets
-// prettier-ignore
-falconHeavy.setThrusters = [merlin10, merlin30, methalox80];
-starShip.setThrusters = [merlin30, raptor40, raptor50, raptor50, merlin30, merlin10];
+falconHeavy.setThrusters = [
+	new Thruster("Merlin-10", 10),
+	new Thruster("Merlin-30", 30),
+	new Thruster("Methalox-80", 80),
+];
+
+starShip.setThrusters = [
+	new Thruster("Merlin-30", 30),
+	new Thruster("Merlin-40", 40),
+	new Thruster("Merlin-50", 50),
+	new Thruster("Raptor-50", 50),
+	new Thruster("Raptor-30", 30),
+	new Thruster("Raptor-10", 10),
+];
 
 // 3. Outlet
 const outletList = document.getElementById("list-all-rockets") as HTMLOListElement;
@@ -22,30 +27,16 @@ const outletSpan = document.querySelector("#counter-rockets .outlet") as HTMLSpa
 // for (let i = 0; i < 10000; i++) {
 // 	let someRocket = new Rocket("someRock"); // stack overflow
 // }
-
-// let testRocket2 = new Rocket("test0002"); // no thrusters specified
-// let testRocket3 = new Rocket("test0003"); // insuficient thrusters
-// testRocket3.setThrusters = [merlin10];
-// let testRocket4 = new Rocket("test00044444444"); // wrong code format
-// testRocket4.setThrusters = [merlin10, raptor40];
-// let testRocket5 = new Rocket("t005"); // wrong code format
-// testRocket5.setThrusters = [merlin10, raptor40];
-// let testRocket6 = new Rocket("     "); // not specified
-// testRocket6.setThrusters = [merlin10, raptor40];
-// let testRocket7 = new Rocket(""); // not specified
-// testRocket7.setThrusters = [merlin10, raptor40];
-// let testRocket8 = new Rocket(); // not specified
-// testRocket8.setThrusters = [merlin10, raptor40];
-// let testRocket9 = new Rocket("   test0006   "); // OK / .trim()
-// testRocket9.setThrusters = [merlin10, raptor40];
-
-// const merlin10 = new Thruster("   Merlin  "); // ("Merlin", 0)
-// const merlin30 = new Thruster(" Merlin  ", -8); // ("Merlin", 0)
-// const methalox80 = new Thruster(); // ("not specified", 0)
-
-// console.log(Rocket.getRocketList[1].getThrusters[0]);
-// console.log(Rocket.getRocketList[1].getThrusters[1]);
-// console.log(Rocket.getRocketList[1].getThrusters[2]);
+// const testRocket2 = new Rocket("test0001"); // no thrusters specified
+// const testRocket4 = new Rocket("test000222222"); // wrong code format
+// const testRocket5 = new Rocket("t005"); // wrong code format
+// const testRocket6 = new Rocket("     "); // not specified
+// const testRocket7 = new Rocket(""); // not specified
+// const testRocket8 = new Rocket(); // not specified
+// const testRocket9 = new Rocket("   test0006   "); // OK / .trim()
+// testRocket9.setThrusters = [new Thruster("    Merlin-10      ", 10)]; // {"Merlin", 0} // OK / .trim()
+// testRocket9.setThrusters = [new Thruster(" Merlin  ", -8)]; // {"Merlin", 0}
+// testRocket9.setThrusters = [new Thruster()]; // {"not specified", 0}
 // ***************************
 
 // 4. List of Rockets --init
@@ -135,44 +126,14 @@ function renderList() {
 
 	// 2. render number of Rockets
 	outletSpan.textContent = Rocket.countToString(); // stringified
+
+	// 3. TEST	//  liteners -> speed
+	let speedUpButtons = document.querySelectorAll(".speed-up-power") as NodeListOf<HTMLButtonElement>;
+
+	// HTML => exclude first btn / is visibility hidden -> i starts at 1
+	for (let i = 1; i < speedUpButtons.length; i++) {
+		speedUpButtons[i].addEventListener("click", function () {
+			Rocket.list[i - 1].speedUp(); 
+		});
+	}
 }
-
-// TEST
-// 1.4 liteners -> speed
-let speedUpButtons = document.querySelectorAll(".speed-up-power") as NodeListOf<HTMLButtonElement>;
-
-// HTML => exclude first btn / is visibility hidden -> i starts at 1
-for (let i = 1; i < speedUpButtons.length; i++) {
-	console.log(speedUpButtons[i]);
-
-	speedUpButtons[i].addEventListener("click", function () {
-		Rocket.getRocketList[i - 1].speedUp(); // <- FALLA . DEBBUGG IT
-		console.log(Rocket.getRocketList[i - 1]);
-	});
-}
-
-// let btnSpeedDown = document.querySelector(`#${cloned.id} .speed-down-power`) as HTMLButtonElement;
-
-// btnSpeedUp.addEventListener("click", function () {
-// 	rocket.speedUp(); // <-- FALLA
-
-// 	console.log(rocket);
-// 	console.log(rocket.currentThrust());
-// 	console.log(rocket.currentPower());
-
-// 	// <- Current Thrust
-// 	// prettier-ignore
-// 	outletList
-// 		.children[i+1].children[0].children[0]
-// 		.children[3].children[1].textContent = rocket.currentThrust();
-
-// 	// <- Current Power
-// 	// prettier-ignore
-// 	outletList
-// 		.children[i+1].children[0].children[0]
-// 		.children[4].children[1].textContent = rocket.currentPower().toString();
-// });
-
-// btnSpeedDown.addEventListener("click", function () {
-// 	console.log(rocket);
-// });

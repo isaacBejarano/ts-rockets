@@ -1,10 +1,10 @@
 class Rocket {
-	private readonly id: string;
+	private id: string;
 	private thrusters: Thruster[] = [];
-	private static list: Rocket[] = [];
-	static readonly minThrusters: number = 2;
-	static readonly powerIncrement: number = 10;
-	private static count: number = 0;
+	static list: Rocket[] = [];
+	static minThrusters: number = 2;
+	static powerIncrement: number = 10;
+	static count: number = 0;
 
 	constructor(id?: string) {
 		this.id =
@@ -84,11 +84,10 @@ class Rocket {
 	}
 
 	speedUp() {
-		for (let i = 0; i < this.totalThrusters(); i++) {
-			// prettier-ignore
-			this.thrusters[i].setCurrentPower =
-				this.thrusters[i].getCurrentPower + Rocket.powerIncrement;
-		}
+		this.thrusters.forEach(thruster => {
+			thruster.setCurrentPower = 10;
+		});
+		console.log(this.thrusters);
 	}
 
 	// toString

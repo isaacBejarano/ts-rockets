@@ -88,11 +88,10 @@ var Rocket = /** @class */ (function () {
         return sum;
     };
     Rocket.prototype.speedUp = function () {
-        for (var i = 0; i < this.totalThrusters(); i++) {
-            // prettier-ignore
-            this.thrusters[i].setCurrentPower =
-                this.thrusters[i].getCurrentPower + Rocket.powerIncrement;
-        }
+        this.thrusters.forEach(function (thruster) {
+            thruster.setCurrentPower = 10;
+        });
+        console.log(this.thrusters);
     };
     // toString
     Rocket.prototype.totalThrustersToString = function () {
