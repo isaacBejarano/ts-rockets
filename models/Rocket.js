@@ -106,7 +106,13 @@ var Rocket = /** @class */ (function () {
     Rocket.prototype.speedUp = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            thruster.setCurrentPower = 10;
+            thruster.setCurrentPower = thruster.getCurrentPower + 10;
+        }
+    };
+    Rocket.prototype.speedDown = function () {
+        for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
+            var thruster = _a[_i];
+            thruster.setCurrentPower = thruster.getCurrentPower - 10;
         }
     };
     // static props

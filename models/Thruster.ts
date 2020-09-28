@@ -23,7 +23,7 @@ class Thruster {
 
 	// setters
 	set setCurrentPower(x: number) {
-		this.currentPower += x;
+		this.currentPower = x;
 	}
 
 	// getters

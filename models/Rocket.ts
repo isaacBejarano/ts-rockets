@@ -6,7 +6,7 @@ class Rocket {
 	// instance props
 	private id: string;
 	private thrusters: Thruster[] = [];
-	
+
 	constructor(id?: string) {
 		this.id =
 			!id || id.trim().length === 0
@@ -97,7 +97,13 @@ class Rocket {
 
 	speedUp() {
 		for (let thruster of this.thrusters) {
-			thruster.setCurrentPower = 10;
+			thruster.setCurrentPower = thruster.getCurrentPower + 10;
+		}
+	}
+
+	speedDown() {
+		for (let thruster of this.thrusters) {
+			thruster.setCurrentPower = thruster.getCurrentPower - 10;
 		}
 	}
 }

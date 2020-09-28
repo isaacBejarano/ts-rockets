@@ -33,20 +33,20 @@ const outletSpan = document.querySelector("#counter-rockets .outlet") as HTMLSpa
 // const testRocket6 = new Rocket("     "); // not specified
 // const testRocket7 = new Rocket(""); // not specified
 // const testRocket8 = new Rocket(); // not specified
-// const testRocket9 = new Rocket("   test0006   "); // OK / .trim()
+// const testRocket9 = new Rocket("   test0009   "); // OK / .trim()
 // testRocket9.setThrusters = [new Thruster("    Merlin-10      ", 10)]; // {"Merlin", 0} // OK / .trim()
 // testRocket9.setThrusters = [new Thruster(" Merlin  ", -8)]; // {"Merlin", 0}
+// testRocket9.setThrusters = [new Thruster()]; // {"not specified", 0}
 // testRocket9.setThrusters = [new Thruster()]; // {"not specified", 0}
 // ***************************
 
 // 4. List of Rockets --init
 renderList();
 
-// 5. List of Rockets --update
-const btnList = document.getElementById("btn-show-all-rockets") as HTMLButtonElement; // ref
+// 5. List of Rockets --onclick to update
+const btnList = document.getElementById("btn-show-all-rockets") as HTMLButtonElement;
 let initialListlength = outletList.children.length;
 
-/* LISTENER */
 btnList.addEventListener("click", function () {
 	if (outletList.children.length > initialListlength) renderList(); // update
 
@@ -54,6 +54,23 @@ btnList.addEventListener("click", function () {
 	outletP.classList.toggle("is-hidden");
 	outletList.classList.toggle("is-hidden");
 });
+
+// 6. List of Rockets --onclick to speedUp()
+let speedUpButtons = document.querySelectorAll(".speed-up-power") as NodeListOf<HTMLButtonElement>;
+let speedDownButtons = document.querySelectorAll(".speed-down-power") as NodeListOf<HTMLButtonElement>;
+
+for (let i = 1; i < speedUpButtons.length; i++) {
+	// speedUpButtons[0] is visibility hidden
+	speedUpButtons[i].addEventListener("click", function () {
+		// update data
+		Rocket.getRocketList[i - 1].speedUp();
+		// inject updated data in ref
+		let outletCurrentThrust = this.parentElement?.previousElementSibling?.children[3].children[1] as HTMLSpanElement;
+		let outletCurrentPower = this.parentElement?.previousElementSibling?.children[4].children[1] as HTMLSpanElement;
+		outletCurrentThrust.textContent = Rocket.getRocketList[i - 1].currentThrust();
+		outletCurrentPower.textContent = Rocket.getRocketList[i - 1].currentPower().toString();
+	});
+}
 
 /* LIB */
 function renderList() {
@@ -77,19 +94,19 @@ function renderList() {
 		injectData(i, 4, rocket.currentPower().toString()); // <- Current Power
 
 		// 1.4 liteners -> speed up/down
-		let speedUpButtons = document.querySelectorAll(".speed-up-power") as NodeListOf<HTMLButtonElement>;
+		// let speedUpButtons = document.querySelector(".speed-up-power") as HTMLButtonElement;
+		// speedUpButtons.id = `btn-${i + 1}`;
 
-		// HTML => exclude first btn / is visibility hidden -> i starts at 1
+		// console.log(outletList.children[0].children[0].children[0].children[3].children[1]);
+		// console.log(outletList.children[0].children[0].children[1].children[1]);
 
-		for (let j = 1; j < speedUpButtons.length; j++) {
-			speedUpButtons[j].addEventListener("click", function () {
-				Rocket.getRocketList[j - 1].speedUp(); // btn1 -> Rocket[0], etc...
-				// injected data update
-				// injectData(i, 3, rocket.currentThrust()); // <- Current Thrust
-				// injectData(i, 4, rocket.currentPower().toString()); // <- Current Power
-				console.log(outletList.children[0].children[0].children[0].children[3].children[1]);
-			});
-		}
+		// outletList.children[0].children[0].children[1].children[1].addEventListener(
+		// 	"click",
+		// 	function () {
+		// 		this.style.color = "red";
+		// 	},
+		// 	true
+		// );
 
 		// 1.5 <li> validate CSS
 		if (rocket.getId === "not specified" || rocket.getId === "wrong code format") invalidCSS(i, 0); // Rocket
@@ -107,11 +124,6 @@ function renderList() {
 
 // prettier-ignore
 function injectData(i: number, HTMLTemplateIndex: number, action: string) {
-	// console.log(
-	// 	outletList
-	// 	.children[0].children[0].children[0]
-	// 	.children[HTMLTemplateIndex].children[1].textContent = 'lol'
-	// 	)
 	return (outletList.children[i + 1].children[0].children[0].children[
 		HTMLTemplateIndex
 	].children[1].textContent = action);
