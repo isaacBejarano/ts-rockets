@@ -2,8 +2,8 @@ class Thruster {
 	// static props
 	private static readonly minThrust: number = 0; // default
 	// instance props
-	private currentPower: number = 0; // default
-	
+	private currentThrust: number = 0; // default
+
 	constructor(
 		private readonly model: string = "", // default
 		private readonly maxThrust: number = Thruster.minThrust
@@ -22,16 +22,16 @@ class Thruster {
 	}
 
 	// setters
-	set setCurrentPower(x: number) {
-		this.currentPower = x;
+	set setCurrentThrust(x: number) {
+		this.currentThrust = x;
 	}
 
 	// getters
-	get getMaxThrust(): number {
-		return this.maxThrust;
+	get getCurrentThrust(): number {
+		return this.currentThrust;
 	}
 
-	get getCurrentPower(): number {
-		return this.currentPower;
+	get getMaxThrust(): number {
+		return this.maxThrust;
 	}
 }

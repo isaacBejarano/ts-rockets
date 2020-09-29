@@ -74,7 +74,7 @@ class Rocket {
 
 		if (this.thrusters.length >= Rocket.minThrustersLength) {
 			for (let thruster of this.thrusters) {
-				thurstersPowerList += thruster.getCurrentPower + ", ";
+				thurstersPowerList += thruster.getCurrentThrust + ", ";
 			}
 			// remove last ", "
 			thurstersPowerList = thurstersPowerList.substr(0, thurstersPowerList.length - 2);
@@ -85,11 +85,11 @@ class Rocket {
 		return thurstersPowerList;
 	}
 
-	currentPower(): number {
+	totalPower(): number {
 		let sum: number = 0;
 
 		for (let thruster of this.thrusters) {
-			sum += thruster.getCurrentPower;
+			sum += thruster.getCurrentThrust;
 		}
 
 		return sum;
@@ -97,13 +97,22 @@ class Rocket {
 
 	speedUp() {
 		for (let thruster of this.thrusters) {
-			thruster.setCurrentPower = thruster.getCurrentPower + 10;
+			// max power is 120
+			if (this.totalPower() < 120) {
+				// limit each thruster
+				console.log(thruster.getMaxThrust);
+				if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
+					thruster.setCurrentThrust = thruster.getCurrentThrust + 10;
+			}
 		}
+
+		// more efficient WHILE
 	}
 
 	speedDown() {
 		for (let thruster of this.thrusters) {
-			thruster.setCurrentPower = thruster.getCurrentPower - 10;
+			// disable negative currentThrust
+			thruster.setCurrentThrust = thruster.getCurrentThrust > 0 ? thruster.getCurrentThrust - 10 : 0;
 		}
 	}
 }

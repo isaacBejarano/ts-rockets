@@ -83,7 +83,7 @@ var Rocket = /** @class */ (function () {
         if (this.thrusters.length >= Rocket.minThrustersLength) {
             for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
                 var thruster = _a[_i];
-                thurstersPowerList += thruster.getCurrentPower + ", ";
+                thurstersPowerList += thruster.getCurrentThrust + ", ";
             }
             // remove last ", "
             thurstersPowerList = thurstersPowerList.substr(0, thurstersPowerList.length - 2);
@@ -95,24 +95,32 @@ var Rocket = /** @class */ (function () {
             thurstersPowerList = "no thrusters specified";
         return thurstersPowerList;
     };
-    Rocket.prototype.currentPower = function () {
+    Rocket.prototype.totalPower = function () {
         var sum = 0;
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            sum += thruster.getCurrentPower;
+            sum += thruster.getCurrentThrust;
         }
         return sum;
     };
     Rocket.prototype.speedUp = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            thruster.setCurrentPower = thruster.getCurrentPower + 10;
+            // max power is 120
+            if (this.totalPower() < 120) {
+                // limit each thruster
+                console.log(thruster.getMaxThrust);
+                if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
+                    thruster.setCurrentThrust = thruster.getCurrentThrust + 10;
+            }
         }
+        // more efficient WHILE
     };
     Rocket.prototype.speedDown = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            thruster.setCurrentPower = thruster.getCurrentPower - 10;
+            // disable negative currentThrust
+            thruster.setCurrentThrust = thruster.getCurrentThrust > 0 ? thruster.getCurrentThrust - 10 : 0;
         }
     };
     // static props
