@@ -55,36 +55,29 @@ btnList.addEventListener("click", function () {
 	outletList.classList.toggle("is-hidden");
 });
 
-// 6. Speed --onclick
+// 6. Speed --onclick to update List of Rockets
 let speedUpButtons = document.querySelectorAll(".speed-up-power") as NodeListOf<HTMLButtonElement>;
 let speedDownButtons = document.querySelectorAll(".speed-down-power") as NodeListOf<HTMLButtonElement>;
 
-// 6.1 speed up
+// speed up/down
 for (let i = 1; i < speedUpButtons.length; i++) {
-	// speedUpButtons[0] is visibility hidden
+	/*	speedUpButtons.length === speedDownButtons.length
+			speedUpButtons[0] is visibility hidden */
+
 	speedUpButtons[i].addEventListener("click", function () {
-		// update data
-		Rocket.getRocketList[i - 1].speedUp();
-		// inject updated data in ref
-		let outletCurrentThrust = this.parentElement?.previousElementSibling?.children[3].children[1] as HTMLSpanElement;
-		let outletCurrentPower = this.parentElement?.previousElementSibling?.children[4].children[1] as HTMLSpanElement;
-		outletCurrentThrust.textContent = Rocket.getRocketList[i - 1].currentThrust();
-		outletCurrentPower.textContent = Rocket.getRocketList[i - 1].totalPower().toString();
+		Rocket.getRocketList[i - 1].speedUp(); // update data
+		injectDataFromSpeed(this, i); // update DOM
+	});
+
+	speedDownButtons[i].addEventListener("click", function (this) {
+		Rocket.getRocketList[i - 1].speedDown(); // update data
+		injectDataFromSpeed(this, i); // update DOM
 	});
 }
-// speed down 6.2
-for (let i = 1; i < speedDownButtons.length; i++) {
-	// speedUpButtons[0] is visibility hidden
-	speedDownButtons[i].addEventListener("click", function () {
-		// update data
-		Rocket.getRocketList[i - 1].speedDown();
-		// inject updated data in ref
-		let outletCurrentThrust = this.parentElement?.previousElementSibling?.children[3].children[1] as HTMLSpanElement;
-		let outletCurrentPower = this.parentElement?.previousElementSibling?.children[4].children[1] as HTMLSpanElement;
-		outletCurrentThrust.textContent = Rocket.getRocketList[i - 1].currentThrust();
-		outletCurrentPower.textContent = Rocket.getRocketList[i - 1].totalPower().toString();
-	});
-}
+
+// 7. Create new rocket (with Thrusters)
+let btnNew = document.getElementById("btn-create-rocket") as HTMLButtonElement;
+btnNew.addEventListener("click", createNewRocket);
 
 /* LIB */
 
@@ -106,7 +99,7 @@ function renderList() {
 		injectData(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
 		injectData(i, 2, rocket.totalMaxThrust()); // <- Max. Power
 		injectData(i, 3, rocket.currentThrust()); // <- Current Thrust
-		injectData(i, 4, rocket.totalPower().toString()); // <- Current Power
+		injectData(i, 4, rocket.totalPower().toString()); // <- Total Power
 
 		// 1.4 <li> validate CSS
 		if (rocket.getId === "not specified" || rocket.getId === "wrong code format") invalidCSS(i, 0); // Rocket
@@ -118,6 +111,10 @@ function renderList() {
 
 	// 2. Render Number of Rockets
 	outletSpan.textContent = Rocket.getListLength().toString(); // stringified
+}
+
+function createNewRocket() {
+	console.log('cretain...')
 }
 
 /* AUX */
@@ -134,4 +131,12 @@ function invalidCSS(i: number, HTMLTemplateIndex: number) {
 	outletList
 	.children[i+1].children[0].children[0]
 	.children[HTMLTemplateIndex].children[1].classList.add("text-violet");
+}
+
+function injectDataFromSpeed(buton: HTMLButtonElement, i: number) {
+	let outletCurrentThrust = buton.parentElement?.previousElementSibling?.children[3].children[1] as HTMLSpanElement;
+	let outletCurrentPower = buton.parentElement?.previousElementSibling?.children[4].children[1] as HTMLSpanElement;
+
+	outletCurrentThrust.textContent = Rocket.getRocketList[i - 1].currentThrust(); // <- Current Thrust
+	outletCurrentPower.textContent = Rocket.getRocketList[i - 1].totalPower().toString(); // <- Total Power
 }

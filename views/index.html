@@ -26,14 +26,25 @@
 			<header class="container-fluid p-0">
 				<hgroup class="row mx-auto text-light">
 					<h1 class="col-9 display-4 pt-3 pl-4 m-0">Rockets</h1>
-					<div class="col-3 d-flex justify-content-end p-0">
+					<div class="col-3 d-flex flex-column p-0 pt-2 pr-2 pt-sm-3 pr-sm-3">
+						<!-- btn list -->
 						<button
 							id="btn-show-all-rockets"
-							class="align-self-start btn btn-sm btn-outline-plum mt-2 mr-2 mt-sm-4 mr-sm-4"
+							class="align-self-end btn btn-sm btn-outline-plum mb-2 pl-2 pr-3"
 							type="button"
 						>
 							<i class="fas fa-list-ul mr-1"></i>
 							List
+						</button>
+
+						<!-- btn create -->
+						<button
+							id="btn-create-rocket"
+							class="align-self-end btn btn-sm btn-outline-plum"
+							type="button"
+						>
+							<i class="fas fa-rocket mr-1"></i>
+							New
 						</button>
 					</div>
 					<h2 class="col-12 pb-4 pl-4 font-weight-lighter">OOP - Typescript</h2>
@@ -46,7 +57,7 @@
 					<!-- outlet <p> -->
 					<p id="counter-rockets" class="is-hidden">
 						<span>Rockets:</span>
-						<span class="outlet text-gold"></span>
+						<span class="outlet text-cyan"></span>
 					</p>
 				</h3>
 
