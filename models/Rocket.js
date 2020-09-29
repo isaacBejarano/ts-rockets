@@ -109,12 +109,10 @@ var Rocket = /** @class */ (function () {
             // max power is 120
             if (this.totalPower() < 120) {
                 // limit each thruster
-                console.log(thruster.getMaxThrust);
                 if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
                     thruster.setCurrentThrust = thruster.getCurrentThrust + 10;
             }
         }
-        // more efficient WHILE
     };
     Rocket.prototype.speedDown = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
