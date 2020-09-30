@@ -8,6 +8,10 @@ body {
 	background-color: rgb(0 0 0);
 }
 
+header button {
+	min-width: 4.2rem;
+}
+
 #wrapper {
 	background-image: url("../assets/milky_way.jpg");
 	background-size: contain;
@@ -52,23 +56,30 @@ p i.fas:hover {
 }
 
 /* custom class */
-.btn-outline-plum {
+.btn-outline-iris {
 	color: gainsboro;
 	border-color: gainsboro;
 }
 .btn:focus {
 	box-shadow: none;
 }
-.btn-outline-plum:hover {
+.btn-outline-iris:hover {
 	color: inherit;
 	border-left-color: #ffb300e0;
 	border-top-color: #ce15d1dc;
 	border-right-color: #0f87d5f5;
 	border-bottom-color: #5eff00b0;
 }
-.btn-outline-plum:active {
+.btn-outline-iris:active {
 	border-color: inherit;
 	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e);
+}
+.border-iris {
+	color: inherit;
+	border-left-color: #ffb300e0;
+	border-top-color: #ce15d1dc;
+	border-right-color: #0f87d5f5;
+	border-bottom-color: #5eff00b0;
 }
 .text-cyan {
 	color: cyan;
@@ -86,4 +97,7 @@ p i.fas:hover {
 /* dynamic class */
 .is-hidden {
 	visibility: hidden;
+}
+.is-none {
+	display: none;
 }

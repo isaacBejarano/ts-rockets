@@ -28,28 +28,44 @@
 					<h1 class="col-9 display-4 pt-3 pl-4 m-0">Rockets</h1>
 					<div class="col-3 d-flex flex-column p-0 pt-2 pr-2 pt-sm-3 pr-sm-3">
 						<!-- btn list -->
-						<button
-							id="btn-show-all-rockets"
-							class="align-self-end btn btn-sm btn-outline-plum mb-2 pl-2 pr-3"
-							type="button"
-						>
-							<i class="fas fa-list-ul mr-1"></i>
+						<button id="btn-show-all-rockets" class="align-self-end btn btn-sm btn-outline-iris mb-2" type="button">
+							<i class="fas fa-list-ul pr-1"></i>
 							List
 						</button>
 
 						<!-- btn create -->
-						<button
-							id="btn-create-rocket"
-							class="align-self-end btn btn-sm btn-outline-plum"
-							type="button"
-						>
-							<i class="fas fa-rocket mr-1"></i>
+						<button id="btn_create_rocket" class="align-self-end btn btn-sm btn-outline-light" type="button">
+							<i class="fas fa-rocket pr-1"></i>
 							New
 						</button>
 					</div>
 					<h2 class="col-12 pb-4 pl-4 font-weight-lighter">OOP - Typescript</h2>
 				</hgroup>
 			</header>
+
+			<!-- FORM - Create Rocket -->
+			<form
+				id="form_create_rocket"
+				action="#"
+				class="border border-light border-top-0 rounded-bottom p-4 m-0 is-none"
+				novalidate
+			>
+				<section class="d-flex flex-row justify-content-start">
+					<!-- Rocket Code -->
+					<div class="form-group text-light">
+						<i class="fas fa-barcode"></i>
+						<label for="input_rocket_code">Rocket Code</label>
+						<input id="input_rocket_code" class="form-control" type="text" placeholder="e.g. 83wessds" />
+						<!-- tooltips -->
+						<div class="invalid-feedback border border-danger rounded-lg bg-light p-2"></div>
+					</div>
+
+					<!-- submit -->
+					<div class="form-group text-light align-self-end ml-4">
+						<button name="btn_submit_rocket" class="btn btn-dark btn-outline-light" type="submit">Create Rocket</button>
+					</div>
+				</section>
+			</form>
 
 			<!-- LIST OF ALL ROCKETS -->
 			<main class="mx-auto mt-5 pt-md-5">
@@ -92,7 +108,7 @@
 								<p class="my-1">
 									<i class="fas fa-fire"></i>
 									Total Power :
-									<span class="text-gold">outlet</span>
+									<span class="text-gold"></span>
 								</p>
 							</div>
 
@@ -116,5 +132,7 @@
 		<script src="../models/Thruster.js"></script>
 		<script src="../models/Rocket.js"></script>
 		<script src="../controllers/main.js"></script>
+		<script src="../controllers/validate-to-create.js"></script>
+		<script src="../controllers/auxiliar.js"></script>
 	</body>
 </html>
