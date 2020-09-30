@@ -56,12 +56,13 @@ p i.fas:hover {
 }
 
 /* custom class */
+.btn:focus {
+	box-shadow: none;
+}
+
 .btn-outline-iris {
 	color: gainsboro;
 	border-color: gainsboro;
-}
-.btn:focus {
-	box-shadow: none;
 }
 .btn-outline-iris:hover {
 	color: inherit;
@@ -74,13 +75,35 @@ p i.fas:hover {
 	border-color: inherit;
 	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e);
 }
-.border-iris {
-	color: inherit;
-	border-left-color: #ffb300e0;
-	border-top-color: #ce15d1dc;
-	border-right-color: #0f87d5f5;
-	border-bottom-color: #5eff00b0;
+
+.btn-outline-cyan {
+	color: cyan;
+	border-color: cyan;
 }
+.btn-outline-cyan:hover {
+	color: black;
+	border-color: cyan;
+	background-color: cyan;
+}
+.btn-outline-cyan:active {
+	color: cyan !important;
+	border-color: cyan !important;
+}
+
+.btn-outline-aquamarine {
+	color: aquamarine;
+	border-color: aquamarine;
+}
+.btn-outline-aquamarine:hover {
+	color: inherit;
+	border-color: aquamarine;
+	background-color: aquamarine;
+}
+.btn-outline-aquamarine:active {
+	color: aquamarine !important;
+	border-color: aquamarine !important;
+}
+
 .text-cyan {
 	color: cyan;
 }
@@ -93,6 +116,12 @@ p i.fas:hover {
 .text-violet {
 	color: violet;
 }
+.bg-black-fade-top {
+	background-image: linear-gradient(to top, #0000008f 50%, transparent);
+}
+.bg-black {
+	background-color: #0000008f;
+}
 
 /* dynamic class */
 .is-hidden {
@@ -100,4 +129,7 @@ p i.fas:hover {
 }
 .is-none {
 	display: none;
+}
+.is-not-allowed {
+	cursor: not-allowed !important;
 }

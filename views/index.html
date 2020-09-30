@@ -34,7 +34,7 @@
 						</button>
 
 						<!-- btn create -->
-						<button id="btn_create_rocket" class="align-self-end btn btn-sm btn-outline-light" type="button">
+						<button id="btn-create-rocket" class="align-self-end btn btn-sm btn-outline-light" type="button">
 							<i class="fas fa-rocket pr-1"></i>
 							New
 						</button>
@@ -43,26 +43,98 @@
 				</hgroup>
 			</header>
 
-			<!-- FORM - Create Rocket -->
+			<!-- FORM 1 - Rocket -->
 			<form
-				id="form_create_rocket"
+				id="form-create-rocket"
 				action="#"
 				class="border border-light border-top-0 rounded-bottom p-4 m-0 is-none"
 				novalidate
 			>
 				<section class="d-flex flex-row justify-content-start">
 					<!-- Rocket Code -->
-					<div class="form-group text-light">
+					<div class="form-group text-cyan">
 						<i class="fas fa-barcode"></i>
-						<label for="input_rocket_code">Rocket Code</label>
-						<input id="input_rocket_code" class="form-control" type="text" placeholder="e.g. 83wessds" />
+						<label for="input-rocket-code">Rocket Code</label>
+						<input id="input-rocket-code" class="form-control" type="text" placeholder="e.g. 83wessds" />
 						<!-- tooltips -->
 						<div class="invalid-feedback border border-danger rounded-lg bg-light p-2"></div>
 					</div>
 
 					<!-- submit -->
 					<div class="form-group text-light align-self-end ml-4">
-						<button name="btn_submit_rocket" class="btn btn-dark btn-outline-light" type="submit">Create Rocket</button>
+						<button id="btn-submit-rocket" class="btn btn-dark btn-outline-cyan" type="submit">Create Rocket</button>
+					</div>
+				</section>
+			</form>
+
+			<!-- FORM 2 - Thrusters -->
+
+			<!-- RESPONSIVE -->
+			<!-- RESPONSIVE -->
+			<!-- RESPONSIVE -->
+			<!-- RESPONSIVE -->
+			<!-- RESPONSIVE -->
+
+			<form
+				id="form-add-thrusters"
+				action="#"
+				class="border border-light border-top-0 rounded-bottom bg-black-fade-top p-4 m-0 is-none"
+				novalidate
+			>
+				<!-- outlet - Thrusters List to submit -->
+				<p id="thrusters-list" class="text-light">
+					Thrusters List: [
+					<span></span>
+					]
+				</p>
+
+				<section class="d-flex flex-row justify-content-start">
+					<!-- Thruster Model -->
+					<div class="form-group text-aquamarine">
+						<i class="fab fa-superpowers"></i>
+						<label for="input-thruster-model">Thruster Model</label>
+						<input id="input-thruster-model" class="form-control" type="text" placeholder="e.g. Raptor" />
+						<!-- tooltips -->
+						<div class="invalid-feedback border border-danger rounded-lg bg-light p-2"></div>
+					</div>
+
+					<!-- Max. Thrust -->
+					<div class="form-group text-aquamarine">
+						<i class="fas fa-bolt"></i>
+						<label for="input-max-thrust">Max. Thrust</label>
+						<input
+							id="input-max-thrust"
+							class="form-control"
+							type="number"
+							min="0"
+							step="10"
+							placeholder="increment in steps by 10"
+						/>
+						<!-- tooltips -->
+						<div class="invalid-feedback border border-danger rounded-lg bg-light p-2"></div>
+					</div>
+
+					<!-- add Thruster -->
+					<div class="form-group text-aquamarine align-self-end ml-4">
+						<label for="btn_add_thruster">Add to List</label>
+						<button id="btn_add_thruster" class="btn btn-dark btn-outline-light" type="button">
+							<i class="fas fa-plus"></i>
+						</button>
+					</div>
+
+					<!-- remove Thruster -->
+					<div class="form-group text-aquamarine align-self-end ml-4">
+						<label for="btn-remove-last-thruster">Remove Last</label>
+						<button id="btn-remove-last-thruster" class="btn btn-dark btn-outline-light" type="button">
+							<i class="fas fa-minus"></i>
+						</button>
+					</div>
+
+					<!-- submit -->
+					<div class="form-group align-self-end ml-4">
+						<button id="btn-submit-thrusters" class="btn btn-dark btn-outline-aquamarine" type="submit">
+							Accept List
+						</button>
 					</div>
 				</section>
 			</form>

@@ -12,27 +12,29 @@ function renderList() {
 	// 1. Render List of Rockets
 	const templateLiItem = document.querySelector(".template-li-item") as HTMLDivElement;
 
-	Rocket.getRocketList.forEach((rocket, i) => {
+	Rocket.getList.forEach((rocket, i) => {
 		// 1.1 clone + append <li>
 		const cloned = templateLiItem.cloneNode(true) as HTMLLIElement;
 		outletList.append(cloned);
 
-		// 1.2 <li> -> id + show
-		cloned.id = `rocket-${i + 1}`;
+		// 1.2 <li> -> add id's + show
+		cloned.id = `rocket-${i + 1}`; // Rocket
+		cloned.children[0].children[0].children[3].children[1].id = `current-thrust-${i + 1}`; // Current Thrust
+		cloned.children[0].children[0].children[4].children[1].id = `total-power-${i + 1}`; // Total Pwower
 		cloned.classList.remove("d-none");
 
 		// 1.3 <li> <- inject data
-		injectData(i, 0, rocket.getId); // <- Rocket
-		injectData(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
-		injectData(i, 2, rocket.totalMaxThrust()); // <- Max. Power
-		injectData(i, 3, rocket.currentThrust()); // <- Current Thrust
-		injectData(i, 4, rocket.totalPower().toString()); // <- Total Power
+		dataToDOM(i, 0, rocket.getId); // <- Rocket
+		dataToDOM(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
+		dataToDOM(i, 2, rocket.totalMaxThrust()); // <- Max. Power
+		dataToDOM(i, 3, rocket.currentThrust()); // <- Current Thrust
+		dataToDOM(i, 4, rocket.totalPower().toString()); // <- Total Power
 
 		// 1.4 <li> validate CSS
 		if (rocket.getId === "not specified" || rocket.getId === "wrong code format") invalidCSS(i, 0); // Rocket
 		if (rocket.thrustersLength() < Rocket.getMinThrustersLength) {
 			invalidCSS(i, 1); // Thrusters
-			invalidCSS(i, 2); // Max. Power
+			invalidCSS(i, 2); // Max. Thrust
 		}
 	});
 
@@ -40,10 +42,28 @@ function renderList() {
 	outletSpan.textContent = Rocket.getListLength().toString(); // stringified
 }
 
+// Add Speed Event
+function addSpeedEvent() {
+	const speedUpButtons = document.getElementsByClassName("speed-up-power") as HTMLCollectionOf<HTMLButtonElement>;
+	const speedDownButtons = document.getElementsByClassName("speed-down-power") as HTMLCollectionOf<HTMLButtonElement>;
+
+	// speedUpButtons[0] is hidden => Rocket[i] -> btn[i+1]
+	for (let i = 0; i < Rocket.getListLength(); i++) {
+		speedUpButtons[i + 1].addEventListener("click", function () {
+			Rocket.getList[i].speedUp(); // update Rocket.list
+			speedToDOM(this, i); // update DOM
+		});
+
+		speedDownButtons[i + 1].addEventListener("click", function (this) {
+			Rocket.getList[i].speedDown(); // update Rocket.list
+			speedToDOM(this, i); // update DOM
+		});
+	}
+}
 /* AUX */
 
 // prettier-ignore
-function injectData(i: number, HTMLTemplateIndex: number, action: string) {
+function dataToDOM(i: number, HTMLTemplateIndex: number, action: string) {
 	return (outletList.children[i + 1].children[0].children[0].children[
 		HTMLTemplateIndex
 	].children[1].textContent = action);
@@ -56,10 +76,10 @@ function invalidCSS(i: number, HTMLTemplateIndex: number) {
 	.children[HTMLTemplateIndex].children[1].classList.add("text-violet");
 }
 
-function injectDataFromSpeed(buton: HTMLButtonElement, i: number) {
+function speedToDOM(buton: HTMLButtonElement, i: number) {
 	let outletCurrentThrust = buton.parentElement?.previousElementSibling?.children[3].children[1] as HTMLSpanElement;
 	let outletCurrentPower = buton.parentElement?.previousElementSibling?.children[4].children[1] as HTMLSpanElement;
 
-	outletCurrentThrust.textContent = Rocket.getRocketList[i - 1].currentThrust(); // <- Current Thrust
-	outletCurrentPower.textContent = Rocket.getRocketList[i - 1].totalPower().toString(); // <- Total Power
+	outletCurrentThrust.textContent = Rocket.getList[i].currentThrust(); // <- Current Thrust
+	outletCurrentPower.textContent = Rocket.getList[i].totalPower().toString(); // <- Total Power
 }

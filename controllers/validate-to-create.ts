@@ -1,40 +1,68 @@
-inputRocketCode?.addEventListener("input", function () {
-	validateCreateRocketCSS(this);
+// <form> 1 -> Rocket
+inputRocket?.addEventListener("input", function () {
+	validateRocketCSS(this);
 });
 
-formCreateRocket?.addEventListener("submit", function (e) {
-	validateBeforeCreateRocket(e, this, inputRocketCode);
+formRocket?.addEventListener("submit", function (e) {
+	validateToCreateRocket(e, this, inputRocket, formThrusters);
 });
+
+// <form> 2 -> Thrusters
+// inputRocketCode?.addEventListener("input", function () {
+// 	validateThrustersCSS(this);
+// });
+
+// formCreateRocket?.addEventListener("submit", function (e) {
+// 	validateToAddThrusters(e, this, inputRocketCode);
+// });
 
 /* LIB */
 
-// 1. validate "Rocket Code" CSS
-function validateCreateRocketCSS(thisRef: HTMLInputElement): void {
+// 1. validate "Rocket" CSS
+function validateRocketCSS(thisRef: HTMLInputElement): void {
 	thisRef.value.length === 8
 		? (thisRef.classList.add("is-valid"), thisRef.classList.remove("is-invalid"))
-		: (thisRef.classList.add("is-invalid"),
-		  (feedbacRocketCode.textContent = '"Rocket Code" must have exactly 8 digits'));
+		: (thisRef.classList.add("is-invalid"), (feedbacRocket.textContent = '"Rocket Code" must have exactly 8 digits'));
 }
 
-// 2. validate "Rocket Code" value
-function validateBeforeCreateRocket(e: Event, thisRef: HTMLFormElement, ref: HTMLInputElement): void {
-	let x;
+// 1. validate "Thrusters" CSS
+function validateThrustersCSS(): void {}
 
-	if (ref.value.length === 8) {
-		// update Rocket.list
-		new Rocket(ref.value);
+// 2. validate "Rocket" value
+function validateToCreateRocket(
+	e: Event,
+	thisRef: HTMLFormElement,
+	validateRef: HTMLInputElement,
+	thatRef1: HTMLFormElement
+): void {
+	if (validateRef.value.length === 8) {
+		// 1. new instance saved in Rocket.list
+		const rocket = new Rocket(validateRef.value);
+		// alert(`Rocket ${rocket.getId} successfully created`);
 
-		// clear form input + CSS
+		// 2. clear <form> input + CSS
 		thisRef.reset();
-		ref.classList.remove("is-valid");
+		validateRef.classList.remove("is-valid");
 
-		// remove previous render
+		// 3. reset previous List + re-render to update List
 		renderListReset();
+		renderList();
+		addSpeedEvent();
 
-		renderList(); // create updated list
+		// 3. Disable Rocket <form> till Thruster <form> is submited
+		inputRocket.disabled = true;
+		inputRocket.classList.toggle("is-not-allowed");
+		btnSubmitRocket.disabled = true;
+		btnSubmitRocket.classList.toggle("is-not-allowed");
+
+		// 4. show <form2>
+		thatRef1.classList.toggle("is-none");
+
+		// NOTE 1: variable "rocket" destroyed after Fn {} scope
+		// NOTE 2: rockets saved in class Rocket, not in Global!
 	} else {
-		ref.classList.add("is-invalid");
-		feedbacRocketCode.textContent = '"Rocket Code" must have exactly 8 digits';
+		validateRef.classList.add("is-invalid");
+		feedbacRocket.textContent = '"Rocket Code" must have exactly 8 digits';
 		e.preventDefault();
 		e.stopPropagation();
 	}

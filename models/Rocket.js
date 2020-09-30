@@ -18,22 +18,15 @@ var Rocket = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Rocket.prototype, "getThrusters", {
-        // getters
-        get: function () {
-            return this.thrusters;
-        },
-        enumerable: false,
-        configurable: true
-    });
     Object.defineProperty(Rocket.prototype, "getId", {
+        // getters
         get: function () {
             return this.id;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Rocket, "getRocketList", {
+    Object.defineProperty(Rocket, "getList", {
         get: function () {
             return Rocket.list;
         },
@@ -43,13 +36,6 @@ var Rocket = /** @class */ (function () {
     Object.defineProperty(Rocket, "getMinThrustersLength", {
         get: function () {
             return Rocket.minThrustersLength;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Rocket, "getPowerIncrement", {
-        get: function () {
-            return Rocket.powerIncrement;
         },
         enumerable: false,
         configurable: true
@@ -106,19 +92,15 @@ var Rocket = /** @class */ (function () {
     Rocket.prototype.speedUp = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            // max power is 120
-            if (this.totalPower() < 120) {
-                // limit each thruster
-                if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
-                    thruster.setCurrentThrust = thruster.getCurrentThrust + 10;
-            }
+            if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
+                thruster.setCurrentThrust = thruster.getCurrentThrust + Rocket.powerIncrement;
         }
     };
     Rocket.prototype.speedDown = function () {
         for (var _i = 0, _a = this.thrusters; _i < _a.length; _i++) {
             var thruster = _a[_i];
-            // disable negative currentThrust
-            thruster.setCurrentThrust = thruster.getCurrentThrust > 0 ? thruster.getCurrentThrust - 10 : 0;
+            if (thruster.getCurrentThrust > 0)
+                thruster.setCurrentThrust = thruster.getCurrentThrust - Rocket.powerIncrement; // stes down === step up
         }
     };
     // static props

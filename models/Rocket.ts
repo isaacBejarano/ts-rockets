@@ -24,24 +24,16 @@ class Rocket {
 	}
 
 	// getters
-	get getThrusters(): Thruster[] {
-		return this.thrusters;
-	}
-
 	get getId(): string {
 		return this.id;
 	}
 
-	static get getRocketList(): Rocket[] {
+	static get getList(): Rocket[] {
 		return Rocket.list;
 	}
 
 	static get getMinThrustersLength(): number {
 		return Rocket.minThrustersLength;
-	}
-
-	static get getPowerIncrement(): number {
-		return Rocket.powerIncrement;
 	}
 
 	// methods
@@ -97,19 +89,14 @@ class Rocket {
 
 	speedUp() {
 		for (let thruster of this.thrusters) {
-			// max power is 120
-			if (this.totalPower() < 120) {
-				// limit each thruster
-				if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
-					thruster.setCurrentThrust = thruster.getCurrentThrust + 10;
-			}
+			if (thruster.getCurrentThrust + 10 <= thruster.getMaxThrust)
+				thruster.setCurrentThrust = thruster.getCurrentThrust + Rocket.powerIncrement;
 		}
 	}
 
 	speedDown() {
 		for (let thruster of this.thrusters) {
-			// disable negative currentThrust
-			thruster.setCurrentThrust = thruster.getCurrentThrust > 0 ? thruster.getCurrentThrust - 10 : 0;
+			if (thruster.getCurrentThrust > 0) thruster.setCurrentThrust = thruster.getCurrentThrust - Rocket.powerIncrement; // stes down === step up
 		}
 	}
 }
