@@ -6,6 +6,7 @@ class Rocket {
 	// instance props
 	private id: string;
 	private thrusters: Thruster[] = [];
+	private provisionalThrustersList: Thruster[] = [];
 
 	constructor(id?: string) {
 		this.id =
@@ -23,7 +24,15 @@ class Rocket {
 		this.thrusters = thrusters;
 	}
 
+	set setProvisionalThrustersList(x: Thruster[]) {
+		this.provisionalThrustersList = x;
+	}
+
 	// getters
+	get getProvisionalThrustersList() {
+		return this.provisionalThrustersList;
+	}
+
 	get getId(): string {
 		return this.id;
 	}
@@ -34,6 +43,10 @@ class Rocket {
 
 	static get getMinThrustersLength(): number {
 		return Rocket.minThrustersLength;
+	}
+
+	static get getPowerIncrement() {
+		return Rocket.powerIncrement;
 	}
 
 	// methods
@@ -98,5 +111,13 @@ class Rocket {
 		for (let thruster of this.thrusters) {
 			if (thruster.getCurrentThrust > 0) thruster.setCurrentThrust = thruster.getCurrentThrust - Rocket.powerIncrement; // stes down === step up
 		}
+	}
+
+	addToProvisionalThrustersList(x: Thruster) {
+		this.provisionalThrustersList.push(x);
+	}
+
+	removeFromProvisionalThrustersList() {
+		this.provisionalThrustersList.pop();
 	}
 }

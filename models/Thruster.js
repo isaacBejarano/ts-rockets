@@ -35,9 +35,23 @@ var Thruster = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Thruster.prototype, "getModel", {
+        get: function () {
+            return this.model;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Thruster.prototype, "getMaxThrust", {
         get: function () {
             return this.maxThrust;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Thruster, "getMinThrust", {
+        get: function () {
+            return Thruster.minThrust;
         },
         enumerable: false,
         configurable: true

@@ -2,6 +2,7 @@
 var Rocket = /** @class */ (function () {
     function Rocket(id) {
         this.thrusters = [];
+        this.provisionalThrustersList = [];
         this.id =
             !id || id.trim().length === 0
                 ? "not specified"
@@ -18,8 +19,22 @@ var Rocket = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Rocket.prototype, "getId", {
+    Object.defineProperty(Rocket.prototype, "setProvisionalThrustersList", {
+        set: function (x) {
+            this.provisionalThrustersList = x;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket.prototype, "getProvisionalThrustersList", {
         // getters
+        get: function () {
+            return this.provisionalThrustersList;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket.prototype, "getId", {
         get: function () {
             return this.id;
         },
@@ -36,6 +51,13 @@ var Rocket = /** @class */ (function () {
     Object.defineProperty(Rocket, "getMinThrustersLength", {
         get: function () {
             return Rocket.minThrustersLength;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rocket, "getPowerIncrement", {
+        get: function () {
+            return Rocket.powerIncrement;
         },
         enumerable: false,
         configurable: true
@@ -102,6 +124,12 @@ var Rocket = /** @class */ (function () {
             if (thruster.getCurrentThrust > 0)
                 thruster.setCurrentThrust = thruster.getCurrentThrust - Rocket.powerIncrement; // stes down === step up
         }
+    };
+    Rocket.prototype.addToProvisionalThrustersList = function (x) {
+        this.provisionalThrustersList.push(x);
+    };
+    Rocket.prototype.removeFromProvisionalThrustersList = function () {
+        this.provisionalThrustersList.pop();
     };
     // static props
     Rocket.list = [];

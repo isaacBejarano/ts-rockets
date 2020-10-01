@@ -1,54 +1,63 @@
 "use strict";
-// <form> 1 -> Rocket
-inputRocket === null || inputRocket === void 0 ? void 0 : inputRocket.addEventListener("input", function () {
-    validateRocketCSS(this);
-});
-formRocket === null || formRocket === void 0 ? void 0 : formRocket.addEventListener("submit", function (e) {
-    validateToCreateRocket(e, this, inputRocket, formThrusters);
-});
-// <form> 2 -> Thrusters
-// inputRocketCode?.addEventListener("input", function () {
-// 	validateThrustersCSS(this);
-// });
-// formCreateRocket?.addEventListener("submit", function (e) {
-// 	validateToAddThrusters(e, this, inputRocketCode);
-// });
-/* LIB */
-// 1. validate "Rocket" CSS
+// 2. validate "Rocket" CSS
 function validateRocketCSS(thisRef) {
     thisRef.value.length === 8
         ? (thisRef.classList.add("is-valid"), thisRef.classList.remove("is-invalid"))
-        : (thisRef.classList.add("is-invalid"), (feedbacRocket.textContent = '"Rocket Code" must have exactly 8 digits'));
+        : (thisRef.classList.add("is-invalid"), (feedbackRocket.textContent = '"Rocket Code" must have exactly 8 digits'));
 }
-// 1. validate "Thrusters" CSS
-function validateThrustersCSS() { }
 // 2. validate "Rocket" value
-function validateToCreateRocket(e, thisRef, validateRef, thatRef1) {
-    if (validateRef.value.length === 8) {
+function validateToCreateRocket(e, thisRef, inputRef, thatRef) {
+    if (inputRef.value.length === 8) {
         // 1. new instance saved in Rocket.list
-        var rocket = new Rocket(validateRef.value);
-        // alert(`Rocket ${rocket.getId} successfully created`);
+        var rocket = new Rocket(inputRef.value);
         // 2. clear <form> input + CSS
         thisRef.reset();
-        validateRef.classList.remove("is-valid");
+        inputRef.classList.remove("is-valid");
         // 3. reset previous List + re-render to update List
         renderListReset();
         renderList();
         addSpeedEvent();
         // 3. Disable Rocket <form> till Thruster <form> is submited
-        inputRocket.disabled = true;
-        inputRocket.classList.toggle("is-not-allowed");
-        btnSubmitRocket.disabled = true;
-        btnSubmitRocket.classList.toggle("is-not-allowed");
+        inputRocket.value = rocket.getId;
+        disableFormRocket(true);
         // 4. show <form2>
-        thatRef1.classList.toggle("is-none");
+        thatRef.classList.toggle("is-none");
         // NOTE 1: variable "rocket" destroyed after Fn {} scope
         // NOTE 2: rockets saved in class Rocket, not in Global!
     }
     else {
-        validateRef.classList.add("is-invalid");
-        feedbacRocket.textContent = '"Rocket Code" must have exactly 8 digits';
+        inputRef.classList.add("is-invalid");
+        feedbackRocket.textContent = '"Rocket Code" must have exactly 8 digits';
         e.preventDefault();
         e.stopPropagation();
+    }
+}
+// 3. validate "Provisional List of Thrusters" CSS
+function validateMaxThrustCSS(thisRef) {
+    Number.isInteger(+thisRef.value) &&
+        +thisRef.value >= Thruster.getMinThrust &&
+        +thisRef.value % Rocket.getPowerIncrement === 0
+        ? thisRef.classList.remove("is-invalid")
+        : (thisRef.classList.add("is-invalid"),
+            (feedbackThrusterMax.textContent = "\"Max.Thrust\" must be 0 or positive multiple of " + Rocket.getPowerIncrement));
+}
+// 3. validate "Provisional List of Thrusters" values
+function validateToProvisionalTrusterList(inputRef1, inputRef2) {
+    var model = inputRef1.value;
+    var maxThrust = Thruster.getMinThrust; // default 0
+    var lastRocket = Rocket.getList[Rocket.getListLength() - 1];
+    // "Max.Thrust" cannot be negative nor decimal
+    if (Number.isInteger(+inputRef2.value) &&
+        +inputRef2.value >= Thruster.getMinThrust &&
+        +inputRef2.value % Rocket.getPowerIncrement === 0) {
+        maxThrust = +inputRef2.value; // parsed int
+        inputRef2.classList.remove("is-invalid");
+        // push to last Rocket's Provisional List of Thrusters
+        lastRocket.addToProvisionalThrustersList(new Thruster(model, maxThrust));
+        // show provisional List
+        renderProvisionalThrustersList(lastRocket);
+        // clear input for next provisional Thruster
+        inputRef1.value = "";
+        inputRef2.value = "";
     }
 }

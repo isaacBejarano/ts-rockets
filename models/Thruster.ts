@@ -27,11 +27,20 @@ class Thruster {
 	}
 
 	// getters
+
 	get getCurrentThrust(): number {
 		return this.currentThrust;
 	}
 
+	get getModel() {
+		return this.model;
+	}
+
 	get getMaxThrust(): number {
 		return this.maxThrust;
+	}
+
+	static get getMinThrust() {
+		return Thruster.minThrust;
 	}
 }

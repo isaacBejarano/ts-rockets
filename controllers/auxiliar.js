@@ -6,7 +6,6 @@ function renderListReset() {
         outletList.removeChild(outletList.children[outletList.children.length - 1]);
     }
 }
-/* LIB */
 function renderList() {
     // 1. Render List of Rockets
     var templateLiItem = document.querySelector(".template-li-item");
@@ -55,7 +54,6 @@ function addSpeedEvent() {
         _loop_1(i);
     }
 }
-/* AUX */
 // prettier-ignore
 function dataToDOM(i, HTMLTemplateIndex, action) {
     return (outletList.children[i + 1].children[0].children[0].children[HTMLTemplateIndex].children[1].textContent = action);
@@ -72,4 +70,23 @@ function speedToDOM(buton, i) {
     var outletCurrentPower = (_d = (_c = buton.parentElement) === null || _c === void 0 ? void 0 : _c.previousElementSibling) === null || _d === void 0 ? void 0 : _d.children[4].children[1];
     outletCurrentThrust.textContent = Rocket.getList[i].currentThrust(); // <- Current Thrust
     outletCurrentPower.textContent = Rocket.getList[i].totalPower().toString(); // <- Total Power
+}
+// render Thrusters Provisional list
+function renderProvisionalThrustersList(lastRocket) {
+    var listToString = "";
+    for (var _i = 0, _a = lastRocket.getProvisionalThrustersList; _i < _a.length; _i++) {
+        var thruster = _a[_i];
+        listToString += "{ " + thruster.getModel + " : " + thruster.getMaxThrust + " } , ";
+    }
+    listToString.length > 0
+        ? provisionalThrustersList.classList.add("d-block")
+        : provisionalThrustersList.classList.remove("d-block");
+    provisionalThrustersList.innerHTML = "" + listToString;
+}
+// dissable/enable Rockets <form>
+function disableFormRocket(boolean) {
+    inputRocket.disabled = boolean;
+    inputRocket.classList.toggle("is-not-allowed");
+    btnSubmitRocket.disabled = boolean;
+    btnSubmitRocket.classList.toggle("is-not-allowed");
 }
