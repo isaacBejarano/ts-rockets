@@ -1,8 +1,11 @@
 // 2. validate "Rocket" CSS
 function validateRocketCSS(thisRef: HTMLInputElement): void {
+	// prettier-ignore
 	thisRef.value.length === 8
-		? (thisRef.classList.add("is-valid"), thisRef.classList.remove("is-invalid"))
-		: (thisRef.classList.add("is-invalid"), (feedbackRocket.textContent = '"Rocket Code" must have exactly 8 digits'));
+		? (thisRef.classList.add("is-valid"),
+			thisRef.classList.remove("is-invalid"))
+		: (thisRef.classList.add("is-invalid"),
+			(feedbackRocket.textContent = '"Rocket Code" must have exactly 8 digits'));
 }
 
 // 2. validate "Rocket" value
@@ -44,9 +47,7 @@ function validateToCreateRocket(
 
 // 3. validate "Provisional List of Thrusters" CSS
 function validateMaxThrustCSS(thisRef: HTMLInputElement): void {
-	Number.isInteger(+thisRef.value) &&
-	+thisRef.value >= Thruster.getMinThrust &&
-	+thisRef.value % Rocket.getPowerIncrement === 0
+	isInt(+thisRef.value) && +thisRef.value >= Thruster.getMinThrust && +thisRef.value % Rocket.getPowerIncrement === 0
 		? thisRef.classList.remove("is-invalid")
 		: (thisRef.classList.add("is-invalid"),
 		  (feedbackThrusterMax.textContent = `"Max.Thrust" must be 0 or positive multiple of ${Rocket.getPowerIncrement}`));
@@ -60,7 +61,7 @@ function validateToProvisionalTrusterList(inputRef1: HTMLInputElement, inputRef2
 
 	// "Max.Thrust" cannot be negative nor decimal
 	if (
-		Number.isInteger(+inputRef2.value) &&
+		isInt(+inputRef2.value) &&
 		+inputRef2.value >= Thruster.getMinThrust &&
 		+inputRef2.value % Rocket.getPowerIncrement === 0
 	) {

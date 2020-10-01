@@ -76,10 +76,9 @@
 			>
 				<!-- outlet - Thrusters List to submit -->
 				<p id="thrusters-list" class="text-light">
-					<span class="">Thrusters List: [</span>					
+					<span class="">Thrusters List: [</span>
 					<span id="provisional-thrusters-list"></span>
 					<span class="">]</span>
-					
 				</p>
 
 				<section>
@@ -89,8 +88,6 @@
 							<i class="fab fa-superpowers"></i>
 							<label for="input-thruster-model">Thruster Model</label>
 							<input id="input-thruster-model" class="form-control" type="text" placeholder="e.g. Raptor" />
-							<!-- tooltips -->
-							<!-- <div class="invalid-feedback border border-danger rounded-lg bg-light p-2"></div> -->
 						</div>
 						<!-- Max. Thrust -->
 						<div class="form-group text-aquamarine mx-1 mx-sm-3">
@@ -172,12 +169,12 @@
 								<p class="my-1">
 									<i class="fas fa-burn"></i>
 									Current Thrust:
-									<span class="text-gold d-inline-flex"></span>
+									<span class="text-gold d-inline-flex" id="current-thrust"></span>
 								</p>
 								<p class="my-1">
 									<i class="fas fa-fire"></i>
 									Total Power :
-									<span class="text-gold"></span>
+									<span class="text-gold" id="total-power"></span>
 								</p>
 							</div>
 

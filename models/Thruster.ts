@@ -27,7 +27,6 @@ class Thruster {
 	}
 
 	// getters
-
 	get getCurrentThrust(): number {
 		return this.currentThrust;
 	}

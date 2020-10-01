@@ -1,25 +1,29 @@
 // AUXILIARY FUNCTIONS
 function renderListReset() {
-	// lengt > 1 / firstChild is the template <li> with HTMNL to clone
 	while (outletList.children.length > 1) {
-		outletList.removeChild(outletList.children[outletList.children.length - 1]);
+		// Don't remove firstChild since it's the <li> template to clone in outlet <ol>
+		let lastElement = outletList.children[outletList.children.length - 1];
+		outletList.removeChild(lastElement);
 	}
 }
 
 function renderList() {
-	// 1. Render List of Rockets
 	const templateLiItem = document.querySelector(".template-li-item") as HTMLDivElement;
 
+	// 1. Render List of Rockets
 	Rocket.getList.forEach((rocket, i) => {
 		// 1.1 clone + append <li>
 		const cloned = templateLiItem.cloneNode(true) as HTMLLIElement;
 		outletList.append(cloned);
 
 		// 1.2 <li> -> add id's + show
-		cloned.id = `rocket-${i + 1}`; // Rocket
-		cloned.children[0].children[0].children[3].children[1].id = `current-thrust-${i + 1}`; // Current Thrust
-		cloned.children[0].children[0].children[4].children[1].id = `total-power-${i + 1}`; // Total Pwower
+		let currentThrustOutlet = cloned.querySelector("#current-thrust") as HTMLSpanElement;
+		let totalPowerOutlett = cloned.querySelector("#current-thrust") as HTMLSpanElement;
 		cloned.classList.remove("d-none");
+
+		cloned.id = `rocket-${i + 1}`; // Rocket
+		currentThrustOutlet.id = `current-thrust-${i + 1}`; // Current Thrust
+		totalPowerOutlett.id = `total-power-${i + 1}`; // Total Pwower
 
 		// 1.3 <li> <- inject data
 		dataToDOM(i, 0, rocket.getId); // <- Rocket
@@ -100,7 +104,13 @@ function renderProvisionalThrustersList(lastRocket: Rocket) {
 function disableFormRocket(boolean: boolean) {
 	inputRocket.disabled = boolean;
 	inputRocket.classList.toggle("is-not-allowed");
-	
+
 	btnSubmitRocket.disabled = boolean;
 	btnSubmitRocket.classList.toggle("is-not-allowed");
+}
+
+// Number.isInteger() is ES6, doesn't exist in ES5 -> my workaround => isInt(num)
+function isInt(x: number) {
+	let num = "" + (x * 10); // stringified
+	return num[num.length - 1] === "0" ? true : false;
 }

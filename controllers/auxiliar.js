@@ -1,23 +1,26 @@
 "use strict";
 // AUXILIARY FUNCTIONS
 function renderListReset() {
-    // lengt > 1 / firstChild is the template <li> with HTMNL to clone
     while (outletList.children.length > 1) {
-        outletList.removeChild(outletList.children[outletList.children.length - 1]);
+        // Don't remove firstChild since it's the <li> template to clone in outlet <ol>
+        var lastElement = outletList.children[outletList.children.length - 1];
+        outletList.removeChild(lastElement);
     }
 }
 function renderList() {
-    // 1. Render List of Rockets
     var templateLiItem = document.querySelector(".template-li-item");
+    // 1. Render List of Rockets
     Rocket.getList.forEach(function (rocket, i) {
         // 1.1 clone + append <li>
         var cloned = templateLiItem.cloneNode(true);
         outletList.append(cloned);
         // 1.2 <li> -> add id's + show
-        cloned.id = "rocket-" + (i + 1); // Rocket
-        cloned.children[0].children[0].children[3].children[1].id = "current-thrust-" + (i + 1); // Current Thrust
-        cloned.children[0].children[0].children[4].children[1].id = "total-power-" + (i + 1); // Total Pwower
+        var currentThrustOutlet = cloned.querySelector("#current-thrust");
+        var totalPowerOutlett = cloned.querySelector("#current-thrust");
         cloned.classList.remove("d-none");
+        cloned.id = "rocket-" + (i + 1); // Rocket
+        currentThrustOutlet.id = "current-thrust-" + (i + 1); // Current Thrust
+        totalPowerOutlett.id = "total-power-" + (i + 1); // Total Pwower
         // 1.3 <li> <- inject data
         dataToDOM(i, 0, rocket.getId); // <- Rocket
         dataToDOM(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
@@ -89,4 +92,9 @@ function disableFormRocket(boolean) {
     inputRocket.classList.toggle("is-not-allowed");
     btnSubmitRocket.disabled = boolean;
     btnSubmitRocket.classList.toggle("is-not-allowed");
+}
+// Number.isInteger() is ES6, doesn't exist in ES5 -> my workaround => isInt(num)
+function isInt(x) {
+    var num = "" + (x * 10); // stringified
+    return num[num.length - 1] === "0" ? true : false;
 }
