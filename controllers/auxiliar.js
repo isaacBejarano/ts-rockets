@@ -1,78 +1,71 @@
 "use strict";
-// AUXILIARY FUNCTIONS
-function renderListReset() {
-    while (outletList.children.length > 1) {
-        // Don't remove firstChild since it's the <li> template to clone in outlet <ol>
-        var lastElement = outletList.children[outletList.children.length - 1];
-        outletList.removeChild(lastElement);
-    }
-}
+/* AUX */
+// render "List of Rockets"
 function renderList() {
-    var templateLiItem = document.querySelector(".template-li-item");
+    var templateLi = document.querySelector(".template-li-item");
     // 1. Render List of Rockets
     Rocket.getList.forEach(function (rocket, i) {
-        // 1.1 clone + append <li>
-        var cloned = templateLiItem.cloneNode(true);
-        outletList.append(cloned);
-        // 1.2 <li> -> add id's + show
-        var currentThrustOutlet = cloned.querySelector("#current-thrust");
-        var totalPowerOutlett = cloned.querySelector("#current-thrust");
-        cloned.classList.remove("d-none");
-        cloned.id = "rocket-" + (i + 1); // Rocket
-        currentThrustOutlet.id = "current-thrust-" + (i + 1); // Current Thrust
-        totalPowerOutlett.id = "total-power-" + (i + 1); // Total Pwower
-        // 1.3 <li> <- inject data
-        dataToDOM(i, 0, rocket.getId); // <- Rocket
-        dataToDOM(i, 1, rocket.thrustersLength().toString()); // <- Thrusters
-        dataToDOM(i, 2, rocket.totalMaxThrust()); // <- Max. Power
-        dataToDOM(i, 3, rocket.currentThrust()); // <- Current Thrust
-        dataToDOM(i, 4, rocket.totalPower().toString()); // <- Total Power
-        // 1.4 <li> validate CSS
-        if (rocket.getId === "not specified" || rocket.getId === "wrong code format")
-            invalidCSS(i, 0); // Rocket
+        // 1.1 <li> create all
+        var cloned = templateLi.cloneNode(true); // clone template <li>
+        outletList.append(cloned); // append <li>
+        cloned.id = "rocket-" + (i + 1); // <li> id
+        cloned.classList.remove("d-none"); // show <ol>
+        // 1.2 <li> create id's for models
+        var modelRocket = cloned.querySelector("#model-rocket");
+        var modelThrusters = cloned.querySelector("#model-thrusters");
+        var modelMaxThrust = cloned.querySelector("#model-max-thrust");
+        var modelCurrentThrust = cloned.querySelector("#model-current-thrust");
+        var modelTotalPower = cloned.querySelector("#model-total-power");
+        modelRocket.id = "model-rocket-" + (i + 1); // Rocket
+        modelThrusters.id = "model-thrusters-" + (i + 1); // Thrusters
+        modelMaxThrust.id = "model-max-thrust-" + (i + 1); // Max.Thrust
+        modelCurrentThrust.id = "model-current-thrust-" + (i + 1); // Current Thrust
+        modelTotalPower.id = "model-total-power-" + (i + 1); // Total Pwower
+        // 1.3 <li> inject data into models
+        modelRocket.textContent = rocket.getId; // <- Rocket
+        modelThrusters.textContent = rocket.thrustersLength().toString(); // <- Thrusters
+        modelMaxThrust.textContent = rocket.totalMaxThrust(); // <- Max.Thrust
+        modelCurrentThrust.textContent = rocket.currentThrust(); // <- Current Thrust
+        modelTotalPower.textContent = rocket.totalPower().toString(); // <- Total Power
+        // 1.4 <li> models Thrusters + Max.Thrust --validate CSS
         if (rocket.thrustersLength() < Rocket.getMinThrustersLength) {
-            invalidCSS(i, 1); // Thrusters
-            invalidCSS(i, 2); // Max. Thrust
+            modelThrusters.classList.add("text-gold"); // ~ warning
+            modelMaxThrust.classList.add("text-gold"); // ~ warning
         }
     });
     // 2. Render Number of Rockets
-    outletSpan.textContent = Rocket.getListLength().toString(); // stringified
+    outletSpan.textContent = Rocket.getListLength().toString();
+}
+// reset "List of Rockets"
+function resetList() {
+    while (outletList.children.length > 1) {
+        var lastChild = outletList.querySelector("#" + outletList.id + " li:last-child");
+        outletList.removeChild(lastChild);
+    }
+    // NOTE: Don't remove firstChild since it's the <li> template to clone in outlet <ol>
 }
 // Add Speed Event
 function addSpeedEvent() {
     var speedUpButtons = document.getElementsByClassName("speed-up-power");
     var speedDownButtons = document.getElementsByClassName("speed-down-power");
     var _loop_1 = function (i) {
+        // buttons and models [0] are hidden / they belong to <li> template
+        var modelCurrentThrust = document.getElementById("model-current-thrust-" + (i + 1));
+        var modelTotalPower = document.getElementById("model-total-power-" + (i + 1));
         speedUpButtons[i + 1].addEventListener("click", function () {
             Rocket.getList[i].speedUp(); // update Rocket.list
-            speedToDOM(this, i); // update DOM
+            modelCurrentThrust.textContent = Rocket.getList[i].currentThrust(); // <- Current Thrust
+            modelTotalPower.textContent = Rocket.getList[i].totalPower().toString(); // <- Total Power
         });
         speedDownButtons[i + 1].addEventListener("click", function () {
             Rocket.getList[i].speedDown(); // update Rocket.list
-            speedToDOM(this, i); // update DOM
+            modelCurrentThrust.textContent = Rocket.getList[i].currentThrust(); // <- Current Thrust
+            modelTotalPower.textContent = Rocket.getList[i].totalPower().toString(); // <- Total Power
         });
     };
-    // speedUpButtons[0] is hidden => Rocket[i] -> btn[i+1]
     for (var i = 0; i < Rocket.getListLength(); i++) {
         _loop_1(i);
     }
-}
-// prettier-ignore
-function dataToDOM(i, HTMLTemplateIndex, action) {
-    return (outletList.children[i + 1].children[0].children[0].children[HTMLTemplateIndex].children[1].textContent = action);
-}
-// prettier-ignore
-function invalidCSS(i, HTMLTemplateIndex) {
-    outletList
-        .children[i + 1].children[0].children[0]
-        .children[HTMLTemplateIndex].children[1].classList.add("text-violet");
-}
-function speedToDOM(buton, i) {
-    var _a, _b, _c, _d;
-    var outletCurrentThrust = (_b = (_a = buton.parentElement) === null || _a === void 0 ? void 0 : _a.previousElementSibling) === null || _b === void 0 ? void 0 : _b.children[3].children[1];
-    var outletCurrentPower = (_d = (_c = buton.parentElement) === null || _c === void 0 ? void 0 : _c.previousElementSibling) === null || _d === void 0 ? void 0 : _d.children[4].children[1];
-    outletCurrentThrust.textContent = Rocket.getList[i].currentThrust(); // <- Current Thrust
-    outletCurrentPower.textContent = Rocket.getList[i].totalPower().toString(); // <- Total Power
 }
 // render Thrusters Provisional list
 function renderProvisionalThrustersList(lastRocket) {
@@ -93,8 +86,8 @@ function disableFormRocket(boolean) {
     btnSubmitRocket.disabled = boolean;
     btnSubmitRocket.classList.toggle("is-not-allowed");
 }
-// Number.isInteger() is ES6, doesn't exist in ES5 -> my workaround => isInt(num)
+// ES6's Number.isInteger() doesn't exist in ES5 -> my workaround by "isInt(num)"
 function isInt(x) {
-    var num = "" + (x * 10); // stringified
+    var num = "" + x * 10; // stringified
     return num[num.length - 1] === "0" ? true : false;
 }

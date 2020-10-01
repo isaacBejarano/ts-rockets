@@ -9,7 +9,7 @@ var Rocket = /** @class */ (function () {
                 : id.trim().length !== 8
                     ? "wrong code format"
                     : id.trim().toUpperCase();
-        Rocket.list.push(this); // save instances in class
+        Rocket.list.push(this); // instances saved in class!
     }
     Object.defineProperty(Rocket.prototype, "setThrusters", {
         // setter

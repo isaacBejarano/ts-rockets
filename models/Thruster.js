@@ -8,16 +8,8 @@ var Thruster = /** @class */ (function () {
         this.maxThrust = maxThrust;
         // instance props
         this.currentThrust = 0; // default
-        // prettier-ignore
-        this.model =
-            (!model || model.trim() === "")
-                ? "not specified"
-                : model.trim();
-        // prettier-ignore
-        this.maxThrust =
-            maxThrust < Thruster.minThrust
-                ? Thruster.minThrust
-                : maxThrust;
+        this.model = !model || model.trim() === "" ? "not specified" : model.trim();
+        this.maxThrust = maxThrust < Thruster.minThrust ? Thruster.minThrust : maxThrust;
     }
     Object.defineProperty(Thruster.prototype, "setCurrentThrust", {
         // setters

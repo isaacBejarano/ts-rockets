@@ -16,7 +16,7 @@ class Rocket {
 				? "wrong code format"
 				: id.trim().toUpperCase();
 
-		Rocket.list.push(this); // save instances in class
+		Rocket.list.push(this); // instances saved in class!
 	}
 
 	// setter

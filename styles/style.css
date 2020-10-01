@@ -46,9 +46,9 @@ ol {
 }
 ol li:hover {
 	cursor: pointer;
-	background-image: linear-gradient(to right, #ffb100c2 5%, #ce15d17a, #3100ff6e, transparent);
+	background-image: linear-gradient(to right, #ffb100a6 5%, #ce15d14a, #3100ff47, transparent);
 	mix-blend-mode: screen;
-	text-shadow: 0 0 2px black;
+	text-shadow: 0 0 3px black;
 }
 
 p i.fas:hover {
@@ -113,9 +113,10 @@ p i.fas:hover {
 .text-gold {
 	color: gold;
 }
-.text-violet {
-	color: violet;
+.text-greenyellow {
+	color: greenyellow;
 }
+
 .bg-black-fade-top {
 	background-image: linear-gradient(to top, #0000008f 50%, transparent);
 }

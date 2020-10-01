@@ -12,7 +12,7 @@ testRocket9.setThrusters = [new Thruster(" Merlin  ", -8)]; // {"Merlin", 0}
 testRocket9.setThrusters = [new Thruster()]; // {"not specified", 0}
 testRoket9.setThrusters = [new Thruster()]; // {"not specified", 0}
 */
-// Hardcoded Private Static Instances
+/* STARTING DATA - Hardcoded Private Static Instances */
 (function () {
     var rocket = new Rocket("32wessds"); // instance 1
     // add thrusters to instance 1
@@ -54,56 +54,56 @@ var feedbackThrusterMax = document.querySelector("#" + inputMaxThrust.id + " ~ d
 /* EVENTS */
 // 1. List of Rockets
 btnList.addEventListener("click", function () {
-    renderListReset(); //reset previous render
-    renderList(); // new render
-    addSpeedEvent(); // add speed event
+    // reset previous render + re-render + add speed event
+    resetList();
+    renderList();
+    addSpeedEvent();
     // show list
     outletP.classList.toggle("is-hidden");
     outletList.classList.toggle("is-hidden");
 });
-// 2. <form> -> Rocket / show
+// 2. <form> Rocket -> show
 btnNew.addEventListener("click", function () {
     formRocket.classList.toggle("is-none");
 });
-// 2. <form> -> Rocket / create
+// 2. <form> Rocket -> instanciate new "Rocket"
 inputRocket.addEventListener("input", function () {
     validateRocketCSS(this);
 });
 formRocket.addEventListener("submit", function (e) {
     validateToCreateRocket(e, this, inputRocket, formThrusters);
 });
-// 3. <form> -> Thrusters / Add to "Provisional List of Thrusters"
+// 3. <form> Thrusters -> add to "Provisional List of Thrusters"
 inputMaxThrust.addEventListener("input", function () {
     validateMaxThrustCSS(this);
 });
 btnAdd.addEventListener("click", function () {
     validateToProvisionalTrusterList(inputThrusterModel, inputMaxThrust);
 });
-// 4. <form> -> Thrusters / Remove from "Provisional List of Thrusters"
+// 4. <form> Thrusters -> remove from "Provisional List of Thrusters"
 btnRemove.addEventListener("click", function () {
     var lastRocket = Rocket.getList[Rocket.getListLength() - 1];
-    // pop to last Rocket's Provisional List of Thrusters
-    lastRocket.removeFromProvisionalThrustersList();
-    // show updated provisional List
+    lastRocket.removeFromProvisionalThrustersList(); // pop()
+    // "Provisional List of Thrusters" - update view
     renderProvisionalThrustersList(lastRocket);
 });
-// 5. <form> -> Thrusters / Accept "List of Thrusters"
+// 5. <form> Thrusters -> accept "List of Thrusters"
 formThrusters.addEventListener("submit", function () {
     var lastRocket = Rocket.getList[Rocket.getListLength() - 1];
-    // save final accepted Thrusters List
+    // "List of Thrusters" - accepted
     lastRocket.setThrusters = lastRocket.getProvisionalThrustersList;
-    // destroy provisional Thrusters List + clean outlet
+    // "Provisional List of Thrusters" - destroy 
     lastRocket.setProvisionalThrustersList = [];
-    renderProvisionalThrustersList(lastRocket);
-    // enable Rocket <form> for next instances
+    renderProvisionalThrustersList(lastRocket); // update view
+    // <form> Rocket -  enable again
     disableFormRocket(false);
     inputRocket.value = "";
-    // 3. reset previous List + re-render to update List
-    renderListReset();
+    // reset previous render + re-render + add speed event
+    resetList();
     renderList();
     addSpeedEvent();
-    // close all <form>
-    alert("Rocket " + lastRocket.getId + " successfully created");
+    // <form> Rocket + <form> Thrusters - close both
+    alert("Rocket \"" + lastRocket.getId + "\" successfully created");
     formRocket.classList.toggle("is-none");
     formThrusters.classList.toggle("is-none");
 });
